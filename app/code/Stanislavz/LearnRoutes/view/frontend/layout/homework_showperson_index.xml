@@ -6,7 +6,7 @@
     <body>
         <referenceContainer name="content">
             <container name="stanisavz.learnroutes.personalname.layout">
-                <block class="Magento\Framework\View\Element\Template"
+                <block class="Stanislavz\LearnRoutes\Block\CustomLayout"
                        name="learnroutes.block"
                        as="learnroutes.block"
                        template="Stanislavz_LearnRoutes::myhomework.phtml" />
