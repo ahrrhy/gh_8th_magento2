@@ -4,7 +4,13 @@
 
 <div>
     <p>some content</p>
-    <p><?= $block->getName(); ?></p>
-    <p><?= $block->getLastName(); ?></p>
-    <p><a href="<?= $block->getLinkToJson(); ?>">Link To JSON</a></p>
+    <?php if ($block->getName()):?>
+        <p><?= $block->getName(); ?></p>
+    <?php endif;
+    if ($block->getLastName()):?>
+        <p><?= $block->getLastName(); ?></p>
+    <?php endif;
+    if ($block->getLinkToJson()):?>
+        <p><a href="<?= $block->getLinkToJson(); ?>">Link To JSON</a></p>
+    <?php endif; ?>
 </div>
