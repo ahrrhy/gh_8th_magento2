@@ -1,5 +1,8 @@
 #need to remove coding standards
 /magento-coding-standard/
+/magento-coding-standard/vendor/squizlabs/php_codesniffer/CodeSniffer.conf
+/magento-codding-standard/
+/magento-coding-standard/vendor/squizlabs/php_codesniffer/CodeSniffer.conf
 /.buildpath
 /.cache
 /.metadata
