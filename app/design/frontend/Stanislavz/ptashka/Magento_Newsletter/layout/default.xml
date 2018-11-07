@@ -8,13 +8,13 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="footer">
-            <!--<referenceBlock name="form.subscribe">-->
-                <!--<block class="Magento\Cms\Block\Block" name="subscribe_title">-->
-                    <!--<arguments>-->
-                        <!--<argument name="block_id" xsi:type="string">subscribe_title</argument>-->
-                    <!--</arguments>-->
-                <!--</block>-->
-            <!--</referenceBlock>-->
+            <referenceBlock name="form.subscribe">
+                <block class="Magento\Cms\Block\Block" name="subscribe_title">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">subscribe_title</argument>
+                    </arguments>
+                </block>
+            </referenceBlock>
         </referenceContainer>
     </body>
 </page>

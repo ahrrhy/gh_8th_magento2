@@ -4,13 +4,13 @@
 >
     <!--Stanislavz\LearnRoutes\Block\CustomLayout-->
     <body>
-        <!--<referenceContainer name="content">-->
-            <!--<container name="stanisavz.learnroutes.personalname.layout">-->
-                <!--<block class="Stanislavz\LearnRoutes\Block\CustomLayout"-->
-                       <!--name="learnroutes.block"-->
-                       <!--as="learnroutes.block"-->
-                       <!--template="Stanislavz_LearnRoutes::myhomework.phtml" />-->
-            <!--</container>-->
-        <!--</referenceContainer>-->
+        <referenceContainer name="content">
+            <container name="stanisavz.learnroutes.personalname.layout">
+                <block class="Stanislavz\LearnRoutes\Block\CustomLayout"
+                       name="learnroutes.block"
+                       as="learnroutes.block"
+                       template="Stanislavz_LearnRoutes::myhomework.phtml" />
+            </container>
+        </referenceContainer>
     </body>
 </page>
