@@ -51,8 +51,8 @@ class Index extends \Magento\Framework\App\Action\Action
             // Here we must also process backend validation or all form fields.
             // Otherwise attackers can just copy our page, remove fields validation and send anything they want
             $data = [
-                'status' => self::STATUS_SUCCESS,
-                'message' => 'Your request was submitted. We\'ll get in touch with you as soon as possible.'
+                'status' => $request->getPost('name'),
+                'message' => $request->getPost('comment')
             ];
         } catch (LocalizedException $e) {
             $data = [

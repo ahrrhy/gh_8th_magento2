@@ -1,7 +1,7 @@
 <?php /** @var $block \Magento\Catalog\Block\Product\View */ ?>
 <section class="ask-question-tab">
     <h4><?= $block->escapeHtml(__('Ask Question')) ?></h4>
-    <form action="<? $block->escapeUrl($block->getUrl('request_sample/submit')) ?>"
+    <form action="<?= $block->escapeUrl($block->getUrl('ask_question/submit')) ?>"
           id="ask-question"
           method="post"
           onsubmit="return false"
@@ -41,7 +41,7 @@
                            placeholder="<?= $block->escapeHtmlAttr(__('Email')) ?>"
                            class="input-text"
                            type="email"
-                           data-validate="{required:true, 'mobileUK':true}"
+                           data-validate="{required:true}"
                     />
                 </div>
             </div>
