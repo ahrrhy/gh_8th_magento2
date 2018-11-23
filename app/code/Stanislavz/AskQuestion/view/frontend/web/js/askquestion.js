@@ -60,9 +60,9 @@ define([
 
                 /** @inheritdoc */
                 success: function (response) {
-                    var alertContent = response.message.name
-                        + '! We got Your question and we will send answer to your e-mail: '
-                        + response.message.email;
+                    var alertContent = response.message.name +
+                        '! We got Your question and we will send answer to your e-mail: ' +
+                        response.message.email;
 
                     $('body').trigger('processStop');
 
