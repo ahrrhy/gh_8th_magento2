@@ -1,9 +1,9 @@
 define([
     'jquery',
-    'jquery/ui',
     'Magento_Ui/js/modal/alert',
     'mage/cookies',
-    'mage/translate'
+    'mage/translate',
+    'jquery/ui'
 ], function ($, alert) {
     'use strict';
 
@@ -60,9 +60,15 @@ define([
 
                 /** @inheritdoc */
                 success: function (response) {
+                    var alertContent = response.message.name
+                        + '! We got Your question and we will send answer to your e-mail: '
+                        + response.message.email;
+
+                    $('body').trigger('processStop');
+
                     alert({
                         title: $.mage.__(response.status),
-                        content: $.mage.__(response.message)
+                        content: alertContent
                     });
 
                     if (response.status === 'Success') {
@@ -82,14 +88,6 @@ define([
                     });
                 }
             });
-        },
-
-        /**
-         * Clear that `geekhub_request_sample_clear_cookie` cookie
-         * when the event `geekhub_request_sample_clear_cookie` is triggered
-         */
-        clearCookie: function () {
-            $.mage.cookies.clear(this.options.cookieName);
         }
     });
 

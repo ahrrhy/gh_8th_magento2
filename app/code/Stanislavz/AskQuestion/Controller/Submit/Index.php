@@ -36,13 +36,11 @@ class Index extends \Magento\Framework\App\Action\Action
     {
         /** @var Http $request */
         $request = $this->getRequest();
+
         try {
             if (!$this->formKeyValidator->validate($request) || $request->getParam('hideit')) {
-                throw new LocalizedException(
-                    __('Something went wrong.
-                     Probably you were away for quite a long time already.
-                      Please, reload the page and try again.')
-                );
+                throw new LocalizedException(__('Something went wrong.
+                 Probably you were away for quite a long time already. Please, reload the page and try again.'));
             }
             if (!$request->isAjax()) {
                 throw new LocalizedException(__('This request is not valid and can not be processed.'));
@@ -51,8 +49,8 @@ class Index extends \Magento\Framework\App\Action\Action
             // Here we must also process backend validation or all form fields.
             // Otherwise attackers can just copy our page, remove fields validation and send anything they want
             $data = [
-                'status' => $request->getPost('name'),
-                'message' => $request->getPost('comment')
+                'status' => self::STATUS_SUCCESS,
+                'message' => $request->getParams()
             ];
         } catch (LocalizedException $e) {
             $data = [
