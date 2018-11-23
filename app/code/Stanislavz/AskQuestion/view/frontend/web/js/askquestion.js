@@ -9,7 +9,12 @@ define([
 
     $.widget('stanislavz.askQuestion', {
         options: {
-            cookieName: 'ask_question_stop_flooding'
+            cookieName: 'ask_question_stop_flooding',
+            cookieLifeTime: 120,
+            floodMessage: {
+                title: 'Sorry, this form is currently not available',
+                content: 'You can use this form after few minutes'
+            }
         },
 
         /** @inheritdoc */
@@ -21,7 +26,7 @@ define([
          * return void;
          */
         submitForm: function () {
-            if (!this.validateForm()) {
+            if (!this.validateForm() || this.isFlood()) {
                 return;
             }
 
@@ -29,7 +34,8 @@ define([
         },
 
         /**
-         * return bool;
+         *
+         * @returns {*|jQuery}
          */
         validateForm: function () {
             return $(this.element).validation().valid();
@@ -63,7 +69,6 @@ define([
                     var alertContent = response.message.name +
                         '! We got Your question and we will send answer to your e-mail: ' +
                         response.message.email;
-
                     $('body').trigger('processStop');
 
                     alert({
@@ -73,7 +78,13 @@ define([
 
                     if (response.status === 'Success') {
                         // Prevent from sending requests too often
-                        $.mage.cookies.set(this.options.cookieName, true);
+                        $.mage.cookies.set(
+                            this.options.cookieName,
+                            true,
+                            {
+                                lifetime: this.options.cookieLifeTime
+                            }
+                        );
                     }
                 },
 
@@ -88,6 +99,18 @@ define([
                     });
                 }
             });
+        },
+
+        /**
+         *
+         * @returns {Boolean}
+         */
+        isFlood: function () {
+            if ($.mage.cookies.get(this.options.cookieName)) {
+                alert(this.options.floodMessage);
+            }
+
+            return $.mage.cookies.get(this.options.cookieName);
         }
     });
 
