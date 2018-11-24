@@ -27,7 +27,6 @@ define(
         );
         $('#dealer-registration-button').on('click', function () {
             $('[data-attribute="modal-content"]').modal('openModal').trigger('contentUpdated');
-            // $('[data-attribute="modal-content"]').modal('openModal');
         });
     }
 );
