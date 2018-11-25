@@ -14,7 +14,7 @@
     // @codingStandardsIgnoreFile
     /* Extensions placeholder */ ?>
     <?= $block->getChildHtml('customer.form.register.extra') ?>
-    <form class="form create account form-create-account"
+    <form class="form create account form-create-account dealer"
           action="<?= $block->escapeUrl($block->getPostActionUrl()) ?>"
           method="post" id="form-validate-dealer"
           enctype="multipart/form-data"
@@ -293,7 +293,7 @@
         {
             ".field.password-dealer": {
                 "passwordStrengthIndicator": {
-                    "formSelector": "form.form-create-account"
+                    "formSelector": "form.form-create-account.dealer"
                 }
             }
         }
