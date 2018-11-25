@@ -157,11 +157,7 @@
                 <div class="field country required">
                     <label for="country" class="label"><span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span></label>
                     <div class="control">
-                        <?= $block->getCountryHtmlSelect(
-                                $defValue = null,
-                                $name = 'country_id',
-                                $id = 'country_dealer',
-                                $title = 'Country') ?>
+                        <?= $block->getCountryHtmlSelect(null, 'country_id', 'country_dealer', 'Country') ?>
                     </div>
                 </div>
                 <?php $addressAttributes = $block->getChildBlock('customer_form_address_user_attributes');?>
