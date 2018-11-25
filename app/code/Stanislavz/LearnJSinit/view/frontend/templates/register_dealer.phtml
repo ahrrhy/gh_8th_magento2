@@ -25,7 +25,7 @@
             <legend class="legend"><span><?= $block->escapeHtml(__('Personal Dealer Information')) ?></span></legend><br>
             <input type="hidden" name="success_url" value="<?= $block->escapeUrl($block->getSuccessUrl()) ?>">
             <input type="hidden" name="error_url" value="<?= $block->escapeUrl($block->getErrorUrl()) ?>">
-            <?= $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Name')->setObject($block->getFormData())->setForceUseCustomerAttributes(true)->toHtml() ?>
+            <?= $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Name')->setObject($block->getFormData())->setForceUseCustomerAttributes(true)->setTemplate('Stanislavz_LearnJSinit::widget/dealer_name.phtml')->toHtml() ?>
             <?php if ($block->isNewsletterEnabled()): ?>
                 <div class="field choice newsletter">
                     <input type="checkbox"
