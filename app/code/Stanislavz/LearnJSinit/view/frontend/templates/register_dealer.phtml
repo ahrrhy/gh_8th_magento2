@@ -157,7 +157,11 @@
                 <div class="field country required">
                     <label for="country" class="label"><span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span></label>
                     <div class="control">
-                        <?= $block->getCountryHtmlSelect() ?>
+                        <?= $block->getCountryHtmlSelect(
+                                $defValue = null,
+                                $name = 'country_id',
+                                $id = 'country_dealer',
+                                $title = 'Country') ?>
                     </div>
                 </div>
                 <?php $addressAttributes = $block->getChildBlock('customer_form_address_user_attributes');?>
@@ -189,7 +193,7 @@
                     >
                 </div>
             </div>
-            <div class="field password required">
+            <div class="field password-dealer required">
                 <label for="password_dealer" class="label"><span><?= $block->escapeHtml(__('Password')) ?></span></label>
                 <div class="control">
                     <input type="password"
@@ -287,7 +291,7 @@
 
         <script type="text/x-magento-init">
         {
-            ".field.password": {
+            ".field.password-dealer": {
                 "passwordStrengthIndicator": {
                     "formSelector": "form.form-create-account"
                 }
