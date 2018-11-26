@@ -1,0 +1,16 @@
+<page layout="1column"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+>
+    <!--Stanislavz\LearnRoutes\Block\CustomLayout-->
+    <body>
+        <referenceContainer name="content">
+            <container name="stanisavz.learnknockout">
+                <block class="Stanislavz\LearnKnockout\Block\KoHello"
+                       name="learnknockout.hello.block"
+                       as="hello.block"
+                       template="Stanislavz_LearnKnockout::ko-hello.phtml" />
+            </container>
+        </referenceContainer>
+    </body>
+</page>
