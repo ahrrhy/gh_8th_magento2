@@ -1,0 +1,17 @@
+<div id="ko-hello-component" data-bind="scope: 'ko-hello-component'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#ko-hello-component" : {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "ko-hello-component": {
+                            "component": "Magento_Catalog/js/ko-hello-component",
+                            "template" : "Magento_Catalog/ko-hello-component-template"
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</div>
