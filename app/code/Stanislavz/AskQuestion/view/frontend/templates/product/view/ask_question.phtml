@@ -5,7 +5,7 @@
           id="ask-question"
           method="post"
           onsubmit="return false"
-          data-mage-init='{"askquestion":{}, "phoneUkr":{}}'
+          data-mage-init='{"askquestion":{}}'
     >
         <fieldset class="fieldset">
             <legend class="legend">
@@ -17,12 +17,12 @@
             </div>
 
             <div class="field name required">
-                <label class="label" for="name">
+                <label class="label" for="dealer-name">
                     <span><?= $block->escapeHtml(__('Name')) ?></span>
                 </label>
                 <div class="control">
                     <input name="name"
-                           id="name"
+                           id="dealer-name"
                            title="<?= $block->escapeHtmlAttr(__('Name')) ?>"
                            placeholder="<?= $block->escapeHtmlAttr(__('Name')) ?>"
                            class="input-text" type="text"
@@ -56,7 +56,7 @@
                            placeholder="<?= $block->escapeHtmlAttr(__('+380...')) ?>"
                            class="input-text mobileUKR"
                            type="text"
-                           data-validate="{'mobileUKR':true}"
+                           data-validate="{'mobileUKR':true, 'required':true}"
                     />
                 </div>
             </div>
