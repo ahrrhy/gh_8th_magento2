@@ -145,6 +145,7 @@ return [
         'Magento_WishlistSampleData' => 1,
         'Stanislavz_AskQuestion' => 1,
         'Stanislavz_LearnJSinit' => 1,
+        'Stanislavz_LearnKnockout' => 1,
         'Stanislavz_LearnRoutes' => 1,
         'Stanislavz_ProductTab' => 1,
         'Temando_Shipping' => 1,
