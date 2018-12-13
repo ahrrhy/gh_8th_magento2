@@ -1,0 +1,22 @@
+<div class="geekhub-custom-widget">
+    <?php if ($block->getLayout()) : ?>
+    <div class="banner-box">
+        <?= $block->getLayout()
+            ->createBlock('Magento\Cms\Block\Block')
+            ->setBlockId($block->getData('block_id'))
+            ->toHtml(); ?>
+
+        <?php endif; ?>
+
+        <?php if ($block->getButtonTitle()) : ?>
+            <a class='action primary' href="<?= $block->getUrl('geekhub-cms'); ?>">
+                <?= $block->getButtonTitle(); ?>
+            </a>
+        <?php endif; ?>
+    </div>
+    <?php if ($block->getBannerContent()) : ?>
+        <p class='custom-widget-content'>
+            <?= $block->getBannerContent(); ?>
+        </p>
+    <?php endif; ?>
+</div>

@@ -144,6 +144,7 @@ return [
         'Magento_WishlistAnalytics' => 1,
         'Magento_WishlistSampleData' => 1,
         'Stanislavz_AskQuestion' => 1,
+        'Stanislavz_CustomWidgetTry' => 1,
         'Stanislavz_LearnJSinit' => 1,
         'Stanislavz_LearnKnockout' => 1,
         'Stanislavz_LearnRoutes' => 1,
