@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Stanislavz_RepeatLecture::cron_job_management"
+             title="Cron Job Management"
+             translate="title"
+             module="Stanislavz_RepeatLecture"
+             sortOrder="50"
+             parent="Magento_Backend::stores_settings"
+             action="repeatlecture/cron/index"
+             resource="Stanislavz_RepeatLecture::cron_job_management"/>
+    </menu>
+</config>
