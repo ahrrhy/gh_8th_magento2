@@ -3,6 +3,8 @@
 namespace Stanislavz\RepeatLecture\Ui\Component\Form;
 
 use Magento\Cron\Model\ResourceModel\Schedule\CollectionFactory;
+use Magento\Ui\DataProvider\Modifier\PoolInterface;
+use Magento\Ui\DataProvider\Modifier\ModifierInterface;
 
 /**
  * Class DataProvider
@@ -19,12 +21,17 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
      */
     protected $loadedData;
     /**
+     * @var PoolInterface
+     */
+    protected $pool;
+    /**
      * Constructor
      *
-     * @param string $name
-     * @param string $primaryFieldName
-     * @param string $requestFieldName
+     * @param $name
+     * @param $primaryFieldName
+     * @param $requestFieldName
      * @param CollectionFactory $blockCollectionFactory
+     * @param PoolInterface $pool
      * @param array $meta
      * @param array $data
      */
@@ -33,10 +40,12 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         $primaryFieldName,
         $requestFieldName,
         CollectionFactory $blockCollectionFactory,
+        PoolInterface $pool,
         array $meta = [],
         array $data = []
     ) {
         $this->collection = $blockCollectionFactory->create();
+        $this->pool = $pool;
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
     }
     /**
@@ -45,104 +54,33 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     public function getMeta()
     {
         $meta = parent::getMeta();
-        $meta['general']['children'] = [
-            'custom_field' => [
-                'arguments' => [
-                    'data' => [
-                        'config' => [
-                            'componentType' => 'field',
-                            'formElement'   => 'input',
-                            'label'         => __('Custom Field'),
-                            'dataType'      => 'text',
-                            'sortOrder'     => 45,
-                            'dataScope'     => 'custom_field',
-                        ]
-                    ]
-                ]
-            ],
-            'stanislavz_custom_field' => [
-                'arguments' => [
-                    'data' => [
-                        'config' => [
-                            'componentType' => 'fieldset',
-                            'label'         => __('Stanislavz Fieldset'),
-                            'sortOrder'     => 20,
-                            'dataScope'     => 'stanislavz_custom_field',
-                            'collapsible' => true,
-                        ]
-                    ]
-                ],
-                'children' => [
-                    'first_field' => [
-                        'arguments' => [
-                            'data' => [
-                                'config' => [
-                                    'componentType' => 'field',
-                                    'formElement'   => 'input',
-                                    'label'         => __('Custom Field First'),
-                                    'dataType'      => 'text',
-                                    'sortOrder'     => 45,
-                                    'dataScope'     => 'custom_field_first',
-                                ]
-                            ]
-                        ]
-                    ],
-                    'second_field' => [
-                        'arguments' => [
-                            'data' => [
-                                'config' => [
-                                    'componentType' => 'field',
-                                    'formElement'   => 'select',
-                                    'label'         => __('Custom Field Second'),
-                                    'dataType'      => 'text',
-                                    'sortOrder'     => 45,
-                                    'dataScope'     => 'custom_field_second',
-                                    'options' => [
-                                        ['value' => '0', 'label' => __('No')],
-                                        ['value' => '1', 'label' => __('Yes')]
-                                    ],
-                                ]
-                            ]
-                        ]
-                    ],
-                    'third_field' => [
-                        'arguments' => [
-                            'data' => [
-                                'config' => [
-                                    'componentType' => 'field',
-                                    'formElement'   => 'date',
-                                    'label'         => __('Custom Field Third'),
-                                    'dataType'      => 'date',
-                                    'sortOrder'     => 45,
-                                    'dataScope'     => 'custom_field_third',
-                                    'options' => [
-                                        ['value' => '0', 'label' => __('No')],
-                                        ['value' => '1', 'label' => __('Yes')]
-                                    ],
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ];
+        /** @var ModifierInterface $modifier */
+        foreach ($this->pool->getModifiersInstances() as $modifier) {
+            $meta = $modifier->modifyMeta($meta);
+        }
         return $meta;
     }
     /**
      * Get data
      *
      * @return array
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getData()
     {
-        if (isset($this->loadedData)) {
-            return $this->loadedData;
+        if (!isset($this->loadedData)) {
+            $this->loadedData = [];
+            $items = $this->collection->getItems();
+            /** @var \Magento\Cron\Model\Schedule $job */
+            foreach ($items as $job) {
+                $this->loadedData[$job->getId()] = $job->getData();
+            }
         }
-        $items = $this->collection->getItems();
-        /** @var \Magento\Cron\Model\Schedule $job */
-        foreach ($items as $job) {
-            $this->loadedData[$job->getId()] = $job->getData();
+        $data = $this->loadedData;
+        /** @var ModifierInterface $modifier */
+        foreach ($this->pool->getModifiersInstances() as $modifier) {
+            $data = $modifier->modifyData($data);
         }
-        return $this->loadedData;
+        return $data;
     }
 }
