@@ -1,0 +1,10 @@
+<div id="customjs-component" data-bind="scope:'custom-js-field'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+    {
+        "#customjs-component": {
+            "Magento_Ui/js/core/app":  <?php /* @escapeNotVerified */ echo $block->getJsLayout();?>
+        }
+    }
+    </script>
+</div>

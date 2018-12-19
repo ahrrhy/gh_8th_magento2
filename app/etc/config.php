@@ -143,6 +143,7 @@ return [
         'Dotdigitalgroup_Email' => 1,
         'Magento_WishlistAnalytics' => 1,
         'Magento_WishlistSampleData' => 1,
+        'Stanislavz_AdminMenuElement' => 1,
         'Stanislavz_AskQuestion' => 1,
         'Stanislavz_CustomWidgetTry' => 1,
         'Stanislavz_LearnJSinit' => 1,
