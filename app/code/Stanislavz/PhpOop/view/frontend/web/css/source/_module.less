@@ -9,12 +9,14 @@
         color: @section-header-color;
     }
 
-    .class-name {
+    .class-name,
+    .file-name {
         font-weight: bold;
         color: @class-name-color;
     }
 
-    dd {
+    dd,
+    .file-data {
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-weight: normal;
     }
@@ -25,6 +27,18 @@
             dd {
                 display: inline-block;
             }
+        }
+    }
+
+    .file-data {
+        display: block;
+    }
+
+    .file-list {
+        ul {
+            margin-left: 0;
+            padding-left: 0;
+            list-style: none;
         }
     }
 }

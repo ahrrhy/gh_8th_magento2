@@ -2,10 +2,11 @@
     $viewModelFileList = $block->getData('view_model_filelist');
     $viewModelClassInformant = $block->getData('view_model_classinformant');
     $viewModelDependencyInjection = $block->getData('view_model_dependencyinjection');
+    $path = 'app/code';
 
     $publicMethods = $viewModelClassInformant->getPublicMethods($this);
     $classConstants = $viewModelClassInformant->getConstants($block);
-    $fileList = $viewModelFileList->getFileList('app/code');
+    $fileList = $viewModelFileList->getFileList($path);
 ?>
 <section class="class-informant">
     <h3 class="section-header">Show $this public methods</h3>
@@ -41,20 +42,19 @@
     <?php endif;?>
 </section>
 <section class="file-list">
-    <h3 class="section-header">Show files in 'app/code'</h3>
-    <div class="files">
-        <?php foreach ($fileList as $vendor => $modules) : ?>
-        <div class="<?= $vendor; ?>">
-            <p class="vendor-name">Vendor name: <?= $vendor; ?></p>
-            <p>Modules List:</p>
-            <?php foreach ($modules as $module => $moduleFiles) : ?>
-            <ul>
-                <li>
-                    <p>Module Name: <?= $module; ?></p>
-                </li>
-            </ul>
+    <h3 class="section-header">Show files in <?= $path; ?></h3>
+    <?php if ($fileList) : ?>
+        <ul>
+            <?php foreach ($fileList as $fileItem => $fileData) : ?>
+            <li>
+                <p>
+                    <span class="file-name">File/Dir name: <?= $fileItem; ?></span>
+                    <span class="file-data">Location: <?= $fileData['path']; ?></span>
+                    <span class="file-data">Created/modified at: <?= $fileData['created/modified']; ?></span>
+                </p>
+
+            </li>
             <?php endforeach; ?>
-        </div>
-        <?php endforeach; ?>
-    </div>
+        </ul>
+    <?php endif; ?>
 </section>

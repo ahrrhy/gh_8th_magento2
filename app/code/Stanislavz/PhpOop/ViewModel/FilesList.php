@@ -13,7 +13,6 @@ class FilesList implements \Magento\Framework\View\Element\Block\ArgumentInterfa
 
     /**
      * FilesList constructor.
-     * @param $recursiveIteratorConst
      * @param \Magento\Framework\Filesystem\DirectoryList $dir
      */
     public function __construct(
@@ -49,22 +48,10 @@ class FilesList implements \Magento\Framework\View\Element\Block\ArgumentInterfa
             if ($fileItem->getFilename() === '.' || $fileItem->getFilename() === '..') {
                 continue;
             }
-
-            $name = $fileItem->isDir()
-                ? [$fileItem->getFilename() => []]
-                : [$fileItem->getFilename() => [
-                    'name'        => $fileItem->getFilename(),
-                    'pathname'    => $fileItem->getPathname(),
-                    'created_at' => date('F d Y H:i:s.', filectime($fileItem->getPathname()))
-                ]];
-
-            for ($depth = $recursiveIterator->getDepth() - 1; $depth >= 0; $depth--) {
-                $name = [
-                    $recursiveIterator->getSubIterator($depth)->current()->getFilename() => $name
-                ];
-            }
-
-            $fileList = array_merge_recursive($fileList, $name);
+            $fileList[$fileItem->getFilename()] = [
+                'path'             => $fileItem->getPathname(),
+                'created/modified' => $fileItem->getFilename(),
+            ];
         }
 
         return $fileList;
