@@ -1,0 +1,60 @@
+<?php
+    $viewModelFileList = $block->getData('view_model_filelist');
+    $viewModelClassInformant = $block->getData('view_model_classinformant');
+    $viewModelDependencyInjection = $block->getData('view_model_dependencyinjection');
+
+    $publicMethods = $viewModelClassInformant->getPublicMethods($this);
+    $classConstants = $viewModelClassInformant->getConstants($block);
+    $fileList = $viewModelFileList->getFileList('app/code');
+?>
+<section class="class-informant">
+    <h3 class="section-header">Show $this public methods</h3>
+    <?php if (isset($publicMethods)) : ?>
+    <dl class="methods-list">
+        <?php foreach ($publicMethods as $publicMethod => $data) : ?>
+            <div>
+                <dt class="class-name">Class name: </dt>
+                <dd><?= $data['class']; ?></dd>
+                <dt>Method name:</dt>
+                <dd><?= $data['name']; ?></dd>
+            </div>
+        <?php endforeach; ?>
+    </dl>
+    <?php endif;?>
+
+    <h3 class="section-header">Show $block constants</h3>
+    <?php if (isset($classConstants)) : ?>
+        <dl class="constants-list">
+            <?php foreach ($classConstants as $class => $data) : ?>
+                <dt class="class-name">Class name: </dt>
+                <dd>
+                    <p><?= $class; ?></p>
+                    <dl>
+                        <?php foreach ($data as $dataKey => $dataValue) : ?>
+                            <dt><?= $dataKey; ?></dt>
+                            <dd><?= $dataValue; ?></dd>
+                        <?php endforeach; ?>
+                    </dl>
+                </dd>
+            <?php endforeach; ?>
+        </dl>
+    <?php endif;?>
+</section>
+<section class="file-list">
+    <h3 class="section-header">Show files in 'app/code'</h3>
+    <div class="files">
+        <?php foreach ($fileList as $vendor => $modules) : ?>
+        <div class="<?= $vendor; ?>">
+            <p class="vendor-name">Vendor name: <?= $vendor; ?></p>
+            <p>Modules List:</p>
+            <?php foreach ($modules as $module => $moduleFiles) : ?>
+            <ul>
+                <li>
+                    <p>Module Name: <?= $module; ?></p>
+                </li>
+            </ul>
+            <?php endforeach; ?>
+        </div>
+        <?php endforeach; ?>
+    </div>
+</section>

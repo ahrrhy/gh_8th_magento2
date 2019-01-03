@@ -1,8 +1,8 @@
 <?php
 
-namespace Stanislavz\PhpOop\Model;
+namespace Stanislavz\PhpOop\ViewModel;
 
-class ClassInformator
+class ClassInformant implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
     /**
      * @param $object
@@ -37,7 +37,7 @@ class ClassInformator
         $constantsList = [];
 
         foreach ($parents as $className => $classData) {
-            $obj = new \ReflectionClass($className);
+            $obj = $this->reflectionFactory($className);
             $constantsList[$className] =  $obj->getConstants();
         }
 
@@ -51,6 +51,10 @@ class ClassInformator
      */
     private function reflectionFactory($object): \ReflectionClass
     {
-        return new \ReflectionClass(\get_class($object));
+        $argument = $object;
+        if (\is_object($object)) {
+            $argument = \get_class($object);
+        }
+        return new \ReflectionClass($argument);
     }
 }
