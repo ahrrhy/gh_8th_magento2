@@ -1,12 +1,13 @@
 <?php
-    $viewModelFileList = $block->getData('view_model_filelist');
-    $viewModelClassInformant = $block->getData('view_model_classinformant');
+    $viewModelFileList            = $block->getData('view_model_filelist');
+    $viewModelClassInformant      = $block->getData('view_model_classinformant');
     $viewModelDependencyInjection = $block->getData('view_model_dependencyinjection');
     $path = 'app/code';
 
-    $publicMethods = $viewModelClassInformant->getPublicMethods($this);
+    $publicMethods  = $viewModelClassInformant->getPublicMethods($this);
     $classConstants = $viewModelClassInformant->getConstants($block);
-    $fileList = $viewModelFileList->getFileList($path);
+    $fileList       = $viewModelFileList->getFileList($path);
+    $diProperties   = $viewModelDependencyInjection->getArguments();
 ?>
 <section class="class-informant">
     <h3 class="section-header">Show $this public methods</h3>
@@ -43,8 +44,8 @@
 </section>
 <section class="file-list">
     <h3 class="section-header">Show files in <?= $path; ?></h3>
-    <?php if ($fileList) : ?>
-        <ul>
+    <?php if (isset($fileList)) : ?>
+        <ul class="reset-list">
             <?php foreach ($fileList as $fileItem => $fileData) : ?>
             <li>
                 <p>
@@ -52,9 +53,28 @@
                     <span class="file-data">Location: <?= $fileData['path']; ?></span>
                     <span class="file-data">Created/modified at: <?= $fileData['created/modified']; ?></span>
                 </p>
-
             </li>
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>
 </section>
+
+<?php if (isset($diProperties)) : ?>
+<section class="dependency-injection">
+    <h3 class="section-header">Show object constructor arguments</h3>
+    <ul class="reset-list">
+        <?php foreach ($diProperties as $propertyName => $propertyValue) :
+            if ($propertyValue === null) {
+                $propertyValue = 'null';
+            }
+            if (is_array($propertyValue)) {
+                $propertyValue = $propertyValue['instance'] ?? 'array';
+            }?>
+        <li>
+            <p>Argument name: <?= $propertyName; ?></p>
+            <p>Property value: <?= $propertyValue; ?></p>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+</section>
+<?php endif; ?>

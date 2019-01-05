@@ -11,6 +11,8 @@ class FilesList implements \Magento\Framework\View\Element\Block\ArgumentInterfa
 
     private $recursiveIteratorConst = \RecursiveIteratorIterator::CHILD_FIRST;
 
+    const RECURSIVE_ITERATOR = \RecursiveIteratorIterator::CHILD_FIRST;
+
     /**
      * FilesList constructor.
      * @param \Magento\Framework\Filesystem\DirectoryList $dir

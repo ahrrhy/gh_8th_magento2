@@ -55,6 +55,7 @@ class ClassInformant implements \Magento\Framework\View\Element\Block\ArgumentIn
         if (\is_object($object)) {
             $argument = \get_class($object);
         }
+
         return new \ReflectionClass($argument);
     }
 }
