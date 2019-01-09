@@ -11,4 +11,12 @@ class SpecialLink extends Template implements BlockInterface
      * @var string
      */
     protected $_template = "widget/samplewidget.phtml";
+
+    public function outputBlock()
+    {
+        return $this->getLayout()
+            ->createBlock('Magento\Cms\Block\Block')
+            ->setBlockId($this->getBlockId())
+            ->toHtml();
+    }
 }
