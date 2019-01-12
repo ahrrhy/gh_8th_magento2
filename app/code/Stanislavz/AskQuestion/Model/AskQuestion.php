@@ -73,7 +73,7 @@ class AskQuestion extends \Magento\Framework\Model\AbstractModel
      * @return \Magento\Framework\Model\AbstractModel
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function beforeSave()
+    public function beforeSave(): \Magento\Framework\Model\AbstractModel
     {
         if (!$this->getStatus()) {
             $this->setStatus(self::STATUS_PENDING);
