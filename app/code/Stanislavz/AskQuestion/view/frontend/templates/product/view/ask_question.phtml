@@ -1,4 +1,6 @@
 <?php /** @var $block \Magento\Catalog\Block\Product\View */ ?>
+<?php $product = $block->getProduct();
+?>
 <section class="ask-question-tab">
     <h4><?= $block->escapeHtml(__('Ask Question')) ?></h4>
     <form action="<?= $block->escapeUrl($block->getUrl('ask_question/submit')) ?>"
@@ -17,12 +19,12 @@
             </div>
 
             <div class="field name required">
-                <label class="label" for="dealer-name">
+                <label class="label" for="name">
                     <span><?= $block->escapeHtml(__('Name')) ?></span>
                 </label>
                 <div class="control">
                     <input name="name"
-                           id="dealer-name"
+                           id="name"
                            title="<?= $block->escapeHtmlAttr(__('Name')) ?>"
                            placeholder="<?= $block->escapeHtmlAttr(__('Name')) ?>"
                            class="input-text" type="text"
@@ -61,12 +63,12 @@
                 </div>
             </div>
             <div class="field comment required">
-                <label class="label" for="comment">
+                <label class="label" for="question">
                     <span><?= $block->escapeHtml(__('Will you talk with us?')) ?></span>
                 </label>
                 <div class="control">
-                        <textarea name="comment"
-                                  id="comment"
+                        <textarea name="question"
+                                  id="question"
                                   title="<?= $block->escapeHtmlAttr(__('Will you talk with us?')) ?>"
                                   placeholder="<?= $block->escapeHtmlAttr(__('Will you talk with us?')) ?>"
                                   class="input-text"
@@ -78,6 +80,14 @@
         </fieldset>
         <div class="actions-toolbar">
             <div class="primary">
+                <input type="hidden"
+                       name="sku"
+                       value="<?= $block->escapeHtml($product->getSku()) ?>"
+                />
+                <input type="hidden"
+                       name="product_name"
+                       value="<?= $block->escapeHtml($product->getName()) ?>"
+                />
                 <input type="hidden" name="hideit" id="hideit" value=""/>
                 <button type="submit" title="<?= $block->escapeHtmlAttr(__('Submit')) ?>" class="action submit primary">
                     <span><?= $block->escapeHtml(__('Submit')) ?></span>
@@ -86,3 +96,4 @@
         </div>
     </form>
 </section>
+<?= $block->getChildHtml('question.list') ?>

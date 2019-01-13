@@ -17,6 +17,14 @@
                 <arguments>
                     <argument translate="true" name="title" xsi:type="string">Ask question</argument>
                 </arguments>
+                <block class="Stanislavz\AskQuestion\Block\Questions"
+                       name="question.list"
+                       template="Stanislavz_AskQuestion::product/view/questions_list.phtml"
+                >
+                    <arguments>
+                        <argument name="limit" xsi:type="number">5</argument>
+                    </arguments>
+                </block>
             </block>
         </referenceBlock>
     </body>

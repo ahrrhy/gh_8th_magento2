@@ -1,0 +1,13 @@
+<?php
+/** @var \Stanislavz\AskQuestion\Block\Questions $block */
+$questions = $block->getQuestions();
+
+if ($questions->count()) : ?>
+    <ul class="question-list">
+        <?php foreach ($questions as $question) : ?>
+        <li>
+            <?= __('Asked by %1', $question->getName()); ?>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>

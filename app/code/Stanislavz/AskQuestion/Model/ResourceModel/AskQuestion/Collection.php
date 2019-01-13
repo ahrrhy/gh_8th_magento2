@@ -36,14 +36,11 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
         $this->_storeManager = $storeManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _construct()
     {
         $this->_init(
-            \Staislavz\AskQuestion\Model\AskQuestion::class,
-            \Staislavz\AskQuestion\Model\ResourceModel\AskQuestion::class
+            \Stanislavz\AskQuestion\Model\AskQuestion::class,
+            \Stanislavz\AskQuestion\Model\ResourceModel\AskQuestion::class
         );
     }
 
