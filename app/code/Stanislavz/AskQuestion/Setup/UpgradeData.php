@@ -51,8 +51,8 @@ class UpgradeData implements UpgradeDataInterface
                 $askQuestion->setName("Customer #$i")
                     ->setEmail("test-mail-$i@gmail.com")
                     ->setPhone("+38093-$i$i$i-$i$i-$i$i")
-                    ->setProductName("Product #$i")
-                    ->setSku("product_sku_$i")
+                    ->setProductName('Stellar Solar Jacket')
+                    ->setSku('WJ01')
                     ->setQuestion('Just a test question')
                     ->setStatus($statuses[array_rand($statuses)])
                     ->setStoreId(Store::DISTRO_STORE_ID);
