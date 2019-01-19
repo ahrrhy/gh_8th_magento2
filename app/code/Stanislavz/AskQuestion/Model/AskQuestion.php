@@ -33,6 +33,7 @@ class AskQuestion extends \Magento\Framework\Model\AbstractModel
      * This is available question statuses
      */
     const STATUS_PENDING = 'pending';
+    const STATUS_READ = 'read';
     const STATUS_ANSWERED = 'answered';
 
     /**
