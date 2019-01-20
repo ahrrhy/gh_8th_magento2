@@ -8,13 +8,11 @@ define([
         defaults: {
             additionalCustomClass: '',
             customClasses: {
-                pending: 'blue',
-                running: 'yellow',
-                success: 'green',
-                missed: 'grey',
-                error: 'red'
+                pending: 'grid-severity-critical',
+                read: 'grid-severity-minor',
+                answered: 'grid-severity-notice'
             },
-            bodyTmpl: 'Stanislavz_RepeatLecture/grid/cells/text'
+            bodyTmpl: 'Stanislavz_AskQuestion/grid/cells/text'
         },
 
         /**
@@ -25,15 +23,7 @@ define([
         getCustomClass: function (row) {
             var customClass = this.customClasses[row.status] || '';
 
-            return customClass + ' ' + this.additionalCustomClass;
-        },
-
-        /**
-         *
-         * @param {str} row
-         */
-        getMessageClass: function (row) {
-            var status = row.status;
+            return customClass;
         }
     });
 });
