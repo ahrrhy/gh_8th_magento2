@@ -57,15 +57,6 @@ class Actions extends Column
                 if (isset($item['question_id'])) {
                     $title = $this->escaper->escapeHtml($item['question_id']);
                     $item[$this->getData('name')] = [
-                        'edit' => [
-                            'href' => $this->urlBuilder->getUrl(
-                                'askquestion/questions/edit',
-                                [
-                                    'question_id' => $item['question_id']
-                                ]
-                            ),
-                            'label' => __('Edit')
-                        ],
                         'delete' => [
                             'href' => $this->urlBuilder->getUrl(
                                 'askquestion/questions/delete',

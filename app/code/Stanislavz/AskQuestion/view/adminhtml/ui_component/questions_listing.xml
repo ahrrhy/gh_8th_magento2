@@ -6,13 +6,6 @@
         </item>
     </argument>
     <settings>
-        <buttons>
-            <button name="add">
-                <url path="*/*/new"/>
-                <class>primary</class>
-                <label translate="true">Add New Question</label>
-            </button>
-        </buttons>
         <spinner>questions_columns</spinner>
         <deps>
             <dep>questions_listing.questions_listing_data_source</dep>
