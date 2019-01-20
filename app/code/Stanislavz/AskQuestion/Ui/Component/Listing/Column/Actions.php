@@ -61,7 +61,7 @@ class Actions extends Column
                             'href' => $this->urlBuilder->getUrl(
                                 'askquestion/questions/edit',
                                 [
-                                    'id' => $item['question_id']
+                                    'question_id' => $item['question_id']
                                 ]
                             ),
                             'label' => __('Edit')
@@ -70,7 +70,7 @@ class Actions extends Column
                             'href' => $this->urlBuilder->getUrl(
                                 'askquestion/questions/delete',
                                 [
-                                    'id' => $item['question_id']
+                                    'question_id' => $item['question_id']
                                 ]
                             ),
                             'label' => __('Delete'),
