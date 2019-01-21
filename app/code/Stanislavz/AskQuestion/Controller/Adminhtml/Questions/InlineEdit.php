@@ -68,10 +68,10 @@ class InlineEdit extends \Magento\Backend\App\Action
             /** @var Transaction $transaction */
             $transaction = $this->transactionFactory->create();
             foreach ($postItems as $postItem) {
-                /** @var AskQuestion $questionsFactory */
-                $questionsFactory = $this->questionsFactory->create();
-                $questionsFactory->setData($postItem);
-                $transaction->addObject($questionsFactory);
+                /** @var AskQuestion $question */
+                $question = $this->questionsFactory->create();
+                $question->setData($postItem);
+                $transaction->addObject($question);
             }
             $transaction->save();
         }
