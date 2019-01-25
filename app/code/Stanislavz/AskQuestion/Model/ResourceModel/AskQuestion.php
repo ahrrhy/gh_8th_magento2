@@ -8,7 +8,6 @@ namespace Stanislavz\AskQuestion\Model\ResourceModel;
  */
 class AskQuestion extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
-
     /**
      * {@inheritdoc}
      */

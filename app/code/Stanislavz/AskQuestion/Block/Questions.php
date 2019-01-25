@@ -61,15 +61,11 @@ class Questions extends \Magento\Framework\View\Element\Template
     {
         /** @var Collection $collection */
         $collection = $this->collectionFactory->create();
-        $collection->addStoreFilter()
-            ->addFieldToFilter('product_name', $this->getProductName())
-            ->getSelect()
-            ->orderRand();
-
         if ($limit = $this->getData('limit')) {
             $collection->setPageSize($limit);
         }
-
+        $collection->addFieldToFilter('product_name', $this->getProductName())
+            ->load();
         return $collection;
     }
 }

@@ -3,6 +3,11 @@
 namespace Stanislavz\AskQuestion\Model;
 
 use Stanislavz\AskQuestion\Model\ResourceModel\AskQuestion as AskQuestionResource;
+use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\Registry;
+use Magento\Framework\Model\Context;
 
 /**
  * Class AskQuestion
@@ -36,6 +41,8 @@ class AskQuestion extends \Magento\Framework\Model\AbstractModel
     const STATUS_READ = 'read';
     const STATUS_ANSWERED = 'answered';
 
+    protected $_eventPrefix = 'askquestion_question';
+
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
@@ -43,19 +50,19 @@ class AskQuestion extends \Magento\Framework\Model\AbstractModel
 
     /**
      * AskQuestion constructor.
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
+     * @param Context $context
+     * @param Registry $registry
+     * @param StoreManagerInterface $storeManager
+     * @param AbstractResource|null $resource
+     * @param AbstractDb|null $resourceCollection
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        Context $context,
+        Registry $registry,
+        StoreManagerInterface $storeManager,
+        AbstractResource $resource = null,
+        AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);

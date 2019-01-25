@@ -12,7 +12,7 @@ use Stanislavz\AskQuestion\Model\ResourceModel\AskQuestion\Collection;
  * Class MassDelete
  * @package Stanislavz\AskQuestion\Controller\Adminhtml\Questions
  */
-class MassDelete extends \Magento\Backend\App\Action
+class MassDelete extends Action
 {
     /**
      * @var Filter
@@ -46,13 +46,12 @@ class MassDelete extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        /** @var \Stanislavz\AskQuestion\Model\ResourceModel\AskQuestion\Collection $collection */
+        /** @var Collection $collection */
         $collection = $this->questionsCollection->create();
         $paramsId = $this->getRequest()->getParams('selected');
         $collection->addFieldToFilter('question_id', $paramsId);
-//        $collection = $this->filter->getCollection($this->questionsCollection->create());
         $collectionSize = $collection->getSize();
-//
+
         foreach ($collection as $question) {
             $question->delete();
         }

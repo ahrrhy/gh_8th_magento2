@@ -2,6 +2,14 @@
 
 namespace Stanislavz\AskQuestion\Model\ResourceModel\AskQuestion;
 
+use Magento\Framework\Data\Collection\EntityFactoryInterface;
+use Psr\Log\LoggerInterface;
+use Magento\Framework\Data\Collection\Db\FetchStrategyInterface;
+use Magento\Framework\Event\ManagerInterface;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
+
 /**
  * Class Collection
  * @package Stanislavz\AskQuestion\Model\ResourceModel\AskQuestion
@@ -9,33 +17,55 @@ namespace Stanislavz\AskQuestion\Model\ResourceModel\AskQuestion;
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var StoreManagerInterface
      */
     private $_storeManager;
 
     /**
+     * @var string
+     */
+    protected $_idFieldName = 'question_id';
+
+    /**
+     * Event prefix
+     *
+     * @var string
+     */
+    protected $_eventPrefix = 'askquestion_question_collection';
+
+    /**
+     * Event object
+     *
+     * @var string
+     */
+    protected $_eventObject = 'question_collection';
+
+    /**
      * Collection constructor.
-     * @param \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy
-     * @param \Magento\Framework\Event\ManagerInterface $eventManager
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Framework\DB\Adapter\AdapterInterface|null $connection
-     * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb|null $resource
+     * @param EntityFactoryInterface $entityFactory
+     * @param LoggerInterface $logger
+     * @param FetchStrategyInterface $fetchStrategy
+     * @param ManagerInterface $eventManager
+     * @param StoreManagerInterface $storeManager
+     * @param AdapterInterface|null $connection
+     * @param AbstractDb|null $resource
      */
     public function __construct(
-        \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory,
-        \Psr\Log\LoggerInterface $logger,
-        \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy,
-        \Magento\Framework\Event\ManagerInterface $eventManager,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\DB\Adapter\AdapterInterface $connection = null,
-        \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null
+        EntityFactoryInterface $entityFactory,
+        LoggerInterface $logger,
+        FetchStrategyInterface $fetchStrategy,
+        ManagerInterface $eventManager,
+        StoreManagerInterface $storeManager,
+        AdapterInterface $connection = null,
+        AbstractDb $resource = null
     ) {
         parent::__construct($entityFactory, $logger, $fetchStrategy, $eventManager, $connection, $resource);
         $this->_storeManager = $storeManager;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _construct()
     {
         $this->_init(
@@ -49,12 +79,11 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * @return $this
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function addStoreFilter(int $storeId = 0): self
+    public function addStoreFilter(int $storeId = 0)
     {
         if (!$storeId) {
             $storeId = (int) $this->_storeManager->getStore()->getId();
         }
-
         $this->addFieldToFilter('store_id', $storeId);
 
         return $this;
