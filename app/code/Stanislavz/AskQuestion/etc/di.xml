@@ -11,8 +11,8 @@
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
-                <item name="questions_listing_data_source"
-                      xsi:type="string">Stanislavz\AskQuestion\Model\ResourceModel\AskQuestion\Grid\CollectionVirtual</item>
+                <item name="questions_listing_data_source" xsi:type="string">
+                    Stanislavz\AskQuestion\Model\ResourceModel\AskQuestion\Grid\CollectionVirtual</item>
             </argument>
         </arguments>
     </type>
