@@ -4,6 +4,10 @@ namespace Stanislavz\PhpOop\Controller\ViewModels;
 
 use Magento\Framework\App\Action\Context;
 
+/**
+ * Class Index
+ * @package Stanislavz\PhpOop\Controller\ViewModels
+ */
 class Index extends \Magento\Framework\App\Action\Action
 {
     /**

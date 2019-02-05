@@ -2,8 +2,15 @@
 
 namespace Stanislavz\PhpOop\ViewModel;
 
+/**
+ * Class DependencyInjection
+ * @package Stanislavz\PhpOop\ViewModel
+ */
 class DependencyInjection implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
+    /**
+     * This params are used in Reflection
+     */
     public $stringParam;
     public $instanceParam;
     public $boolParam;
