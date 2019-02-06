@@ -1,0 +1,28 @@
+<page layout="1column"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+>
+    <!--Stanislavz\LearnRoutes\Block\CustomLayout-->
+    <body>
+        <referenceContainer name="content">
+            <container name="stanisavz.phpoop.viewmodels.layout">
+                <block class="Stanislavz\PhpOop\Block\LearnViewModels"
+                       name="viewmodels.block"
+                       as="viewmodels.block"
+                       template="Stanislavz_PhpOop::viewmodels.phtml">
+                    <arguments>
+                        <argument name="view_model_classinformant" xsi:type="object">
+                            Stanislavz\PhpOop\ViewModel\ClassInformant
+                        </argument>
+                        <argument name="view_model_filelist" xsi:type="object">
+                            Stanislavz\PhpOop\ViewModel\FilesList
+                        </argument>
+                            <argument name="view_model_dependencyinjection" xsi:type="object">
+                            Stanislavz\PhpOop\ViewModel\DependencyInjection
+                        </argument>
+                    </arguments>
+                </block>
+            </container>
+        </referenceContainer>
+    </body>
+</page>
