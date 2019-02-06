@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Watch Questions</title>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Stanislavz\AdminMenuElement\Block\Adminhtml\CustomJs"
+                   name="custom.js.layout"
+                   cacheable="false"
+                   template="Stanislavz_AdminMenuElement::question.phtml">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="custom-js-field" xsi:type="array">
+                                <item name="component" xsi:type="string">uiComponent</item>
+                                <item name="config" xsi:type="array">
+                                    <item name="template" xsi:type="string">Stanislavz_AdminMenuElement/js-group
+                                    </item>
+                                </item>
+                                <item name="children" xsi:type="array">
+                                    <item name="my-child-js" xsi:type="array">
+                                        <item name="sortOrder" xsi:type="string">1</item>
+                                        <item name="component" xsi:type="string">
+                                            Stanislavz_AdminMenuElement/js/view/my-child-js
+                                        </item>
+                                        <item name="displayArea" xsi:type="string">my-child-js</item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

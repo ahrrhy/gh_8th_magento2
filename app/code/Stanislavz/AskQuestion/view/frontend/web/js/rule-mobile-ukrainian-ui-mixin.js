@@ -21,8 +21,9 @@ define([
             handler: function (value, element) {
                 return this.optional(element) || /^\+380\d{9}$/.test(value);
             },
-            message: __('Address cannot be a PO Box address.')
+            message: $.mage.__('Correct ukrainian mobile number without spaces please')
         };
+
         return rules;
     };
 });
