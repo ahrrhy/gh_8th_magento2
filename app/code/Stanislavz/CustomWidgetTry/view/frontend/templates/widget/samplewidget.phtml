@@ -1,19 +1,15 @@
+<?php /** @var \Stanislavz\CustomWidgetTry\Block\Widget\SpecialLink $block */ ?>
 <div class="geekhub-custom-widget">
-    <?php if ($block->getLayout()) : ?>
+    <?php if ($block->outputBlock()) : ?>
     <div class="banner-box">
-        <?= $block->getLayout()
-            ->createBlock('Magento\Cms\Block\Block')
-            ->setBlockId($block->getData('block_id'))
-            ->toHtml(); ?>
-
-        <?php endif; ?>
-
+        <?= $block->outputBlock(); ?>
         <?php if ($block->getButtonTitle()) : ?>
             <a class='action primary' href="<?= $block->getUrl('geekhub-cms'); ?>">
                 <?= $block->getButtonTitle(); ?>
             </a>
         <?php endif; ?>
     </div>
+    <?php endif; ?>
     <?php if ($block->getBannerContent()) : ?>
         <p class='custom-widget-content'>
             <?= $block->getBannerContent(); ?>

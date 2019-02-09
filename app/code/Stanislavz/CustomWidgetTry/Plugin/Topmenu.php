@@ -1,45 +1,55 @@
 <?php
 
+/**
+ * This plugin puts custom link to Top Menu
+ */
 namespace Stanislavz\CustomWidgetTry\Plugin;
 
 use Magento\Framework\Data\Tree\NodeFactory;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Cms\Model\PageFactory;
+use Magento\Framework\UrlInterface;
 
+/**
+ * Class TopMenu
+ * @package Stanislavz\CustomWidgetTry\Plugin
+ */
 class Topmenu
 {
     /**
      * @var NodeFactory
      */
-    protected $nodeFactory;
+    protected $_nodeFactory;
 
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var StoreManagerInterface
      */
     protected $_storeManager;
 
     /**
-     * @var \Magento\Cms\Model\PageFactory
+     * @var PageFactory
      */
     protected $_pageFactory;
 
     /**
-     * @var \Magento\Framework\UrlInterface
+     * @var UrlInterface
      */
     protected $_urlBuilder;
 
     /**
-     * Topmenu constructor.
+     * TopMenu constructor.
      * @param NodeFactory $nodeFactory
-     * @param \Magento\Cms\Model\PageFactory $pageFactory
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Framework\UrlInterface $urlBuilder
+     * @param PageFactory $pageFactory
+     * @param StoreManagerInterface $storeManager
+     * @param UrlInterface $urlBuilder
      */
     public function __construct(
-        NodeFactory $nodeFactory,
+        \Magento\Framework\Data\Tree\NodeFactory $nodeFactory,
         \Magento\Cms\Model\PageFactory $pageFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\UrlInterface $urlBuilder
     ) {
-        $this->nodeFactory = $nodeFactory;
+        $this->_nodeFactory = $nodeFactory;
         $this->_pageFactory = $pageFactory;
         $this->_storeManager = $storeManager;
         $this->_urlBuilder = $urlBuilder;
@@ -52,12 +62,12 @@ class Topmenu
     public function beforeGetHtml(
         \Magento\Theme\Block\Html\Topmenu $subject
     ) {
-        $page = $this->getCmspage('geekhub-cms');
+        $page = $this->getCmsPage('geekhub-cms');
         if ($page === null) {
             return;
         }
 
-        $node = $this->nodeFactory->create(
+        $node = $this->_nodeFactory->create(
             [
                 'data' => [
                     'name' => __('Special offers'),
@@ -78,7 +88,7 @@ class Topmenu
      * @return \Magento\Cms\Model\Page|null
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    protected function getCmspage($identifier)
+    protected function getCmsPage($identifier)
     {
 
         $page = $this->_pageFactory->create();
