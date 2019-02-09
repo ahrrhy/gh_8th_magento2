@@ -5,21 +5,39 @@ namespace Stanislavz\AskQuestion\Helper;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Store\Model\ScopeInterface;
 
+/**
+ * Class Data
+ * @package Stanislavz\AskQuestion\Helper
+ */
 class Data extends AbstractHelper
 {
-    const XML_PATH_STANISLAVZ_CRON = 'stanislavz_crone_options/';
+    public const XML_PATH_STANISLAVZ_CRON_ENABLE = 'stanislavz_crone_options/cron/enable';
 
-    public function getConfigValue($field, $storeId = null)
+    public const XML_PATH_STANISLAVZ_CRON_DAYS = 'stanislavz_crone_options/cron/days';
+
+    /**
+     * @param null $storeId
+     * @return int|bool
+     */
+    public function getConfigValueEnableCron($storeId = null)
     {
         return $this->scopeConfig->getValue(
-            $field, ScopeInterface::SCOPE_STORE, $storeId
+            self::XML_PATH_STANISLAVZ_CRON_ENABLE,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
         );
     }
 
-    public function getGeneralConfig($code, $storeId = null)
+    /**
+     * @param null $storeId
+     * @return int
+     */
+    public function getConfigValueDays($storeId = null): int
     {
-
-        return $this->getConfigValue(self::XML_PATH_STANISLAVZ_CRON .'general/'. $code, $storeId);
+        return (int) $this->scopeConfig->getValue(
+            self::XML_PATH_STANISLAVZ_CRON_DAYS,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
     }
-
 }

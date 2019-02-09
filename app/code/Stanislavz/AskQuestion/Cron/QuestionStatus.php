@@ -3,6 +3,8 @@
 namespace Stanislavz\AskQuestion\Cron;
 
 use Stanislavz\AskQuestion\Model\ChangeStatus;
+use Stanislavz\AskQuestion\Model\AskQuestion;
+use Stanislavz\AskQuestion\Helper\Data;
 
 /**
  * Class QuestionStatus
@@ -15,27 +17,40 @@ class QuestionStatus
      */
     private $logger;
 
+    /**
+     * @var ChangeStatus
+     */
     private $statusModel;
 
+    private $helperData;
+
     /**
-     * Example constructor.
+     * QuestionStatus constructor.
      * @param \Psr\Log\LoggerInterface $logger
+     * @param ChangeStatus $statusModel
+     * @param Data $helperData
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        ChangeStatus $statusModel
+        ChangeStatus $statusModel,
+        Data $helperData
     ) {
         $this->logger      = $logger;
         $this->statusModel = $statusModel;
+        $this->helperData  = $helperData;
     }
 
     /**
      * This will change status of questions
      */
-    public function execute()
+    public function execute(): void
     {
+        if (!$this->checkEnabled()) {
+            return;
+        }
+
         $this->statusModel->changeQuestionStatus(
-            \Stanislavz\AskQuestion\Model\AskQuestion::STATUS_ANSWERED,
+            AskQuestion::STATUS_ANSWERED,
             $this->getDays()
         );
         $this->logger->info('Cron Works');
@@ -46,7 +61,14 @@ class QuestionStatus
      */
     private function getDays(): int
     {
-        // Todo create admin menu config and get days from there
-        return 3;
+        return $this->helperData->getConfigValueDays();
+    }
+
+    /**
+     * @return bool|int
+     */
+    private function checkEnabled()
+    {
+        return $this->helperData->getConfigValueEnableCron();
     }
 }
