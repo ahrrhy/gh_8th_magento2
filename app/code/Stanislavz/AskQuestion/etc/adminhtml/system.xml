@@ -47,7 +47,7 @@
                 <field id="test_multiselect"
                        translate="label"
                        type="multiselect"
-                       sortOrder="10"
+                       sortOrder="15"
                        showInDefault="1"
                        showInWebsite="1"
                        showInStore="1">
@@ -72,6 +72,16 @@
                        showInWebsite="1"
                        showInStore="1">
                     <label>Test Text</label>
+                </field>
+                <field id="test_values"
+                       translate="label"
+                       sortOrder="20"
+                       showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Additional Option Fields</label>
+                    <frontend_model>Stanislavz\AskQuestion\Block\Adminhtml\Form\Field\AdditionalOptionField</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                 </field>
             </group>
         </section>
