@@ -1,10 +1,4 @@
 <?xml version='1.0' encoding="utf-8" ?>
-<!--
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
--->
 
 <layout>
     <referenceBlock translate="description, label">

@@ -1,0 +1,18 @@
+<section id="inviqa" data-bind="scope: 'ko-hello'">
+    <h4>Inviqa KnockOut Introduction</h4>
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+    {
+        "#inviqa" : {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "ko-hello": {
+                        "component": "Stanislavz_LearnKnockout/js/ko-hello",
+                        "template" : "Stanislavz_LearnKnockout/ko-hello-template"
+                    }
+                }
+            }
+        }
+    }
+</script>
+</section>
