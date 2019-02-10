@@ -20,6 +20,7 @@ class SetProductQuantity extends ConsoleCommand
     /** @var string result messages*/
     public const MESSAGE_SUCCESS = 'operation completed successfully';
     public const MESSAGE_ERROR = 'operation failed';
+    public const MESSAGE_ERROR_NO_SUCH_PRODUCT = 'no such product found';
 
     /**
      * @var ProductRepository
@@ -94,9 +95,13 @@ class SetProductQuantity extends ConsoleCommand
             /** @var \Magento\CatalogInventory\Model\Stock\Item $stockItem */
             $stockItem = $this->stockRegistry->getStockItem($productId);
 
-            if ($product) {
-                $stockItem->setQty($newProductQuantity);
+            if (!$product) {
+                $output->writeln('<error>'. self::MESSAGE_ERROR_NO_SUCH_PRODUCT . '<error>');
+
+                return;
             }
+
+            $stockItem->setQty($newProductQuantity);
             $this->stockRegistry->updateStockItemBySku($product->getSku(), $stockItem);
             $output->writeln("<info>" . self::MESSAGE_SUCCESS
                 . "Product $productId quantity changed to $newProductQuantity"
