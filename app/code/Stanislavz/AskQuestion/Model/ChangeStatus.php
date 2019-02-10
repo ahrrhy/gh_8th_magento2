@@ -59,7 +59,7 @@ class ChangeStatus
         // get date in $days before current
         $currentDate = $this->date->gmtDate("Y-m-d h:i:s");
         $beforeDate = strtotime('-'. $days .'day', strtotime($currentDate));
-        $beforeDate = date('Y-m-d h:i:s', $beforeDate);
+        $beforeDate = $this->date->gmtDate('Y-m-d h:i:s', $beforeDate);
 
         return $beforeDate;
     }
