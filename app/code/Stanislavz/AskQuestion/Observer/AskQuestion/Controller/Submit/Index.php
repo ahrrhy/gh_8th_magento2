@@ -4,7 +4,7 @@ namespace Stanislavz\AskQuestion\Observer\AskQuestion\Controller\Submit;
 
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-use Stanislavz\AskQuestion\Helper\Data as ScopeHelperData;
+use Stanislavz\AskQuestion\Helper\NotificationMailSender as EmailSender;
 
 /**
  * Class Index
@@ -12,11 +12,22 @@ use Stanislavz\AskQuestion\Helper\Data as ScopeHelperData;
  */
 class Index implements ObserverInterface
 {
-    private $dataHelper;
+    public const ADMIN_ASKQUESTION_EMAIL_TEMPLATE    = 'admin_question_notification';
 
-    public function __construct(ScopeHelperData $dataHelper)
-    {
-        $this->dataHelper = $dataHelper;
+    public const CUSTOMER_ASKQUESTION_EMAIL_TEMPLATE = 'customer_question_notification';
+
+
+    /** @var EmailSender */
+    private $emailSender;
+
+    /**
+     * Index constructor.
+     * @param EmailSender $emailSender
+     */
+    public function __construct(
+        EmailSender $emailSender
+    ) {
+        $this->emailSender = $emailSender;
     }
 
     /**
@@ -32,16 +43,18 @@ class Index implements ObserverInterface
         $event = $observer->getEvent();
         /** @var \Magento\Framework\App\Request\Http $request */
         $request = $event->getData('request');
-        $customerEmail = $request->getPost('email');
-        return $this;
-    }
+        $postData = $request->getPostValue();
 
-    /**
-     * @return string
-     */
-    private function getAdminEmail(): string
-    {
-        return $this->dataHelper->getAdminEmailAddress();
+        // send admin notification
+        $this->sendEmail(
+            $postData,
+            self::ADMIN_ASKQUESTION_EMAIL_TEMPLATE,
+            $this->emailSender->getAdminEmailAddress()
+        );
+        // send customer notification
+        $this->sendEmail($postData, self::CUSTOMER_ASKQUESTION_EMAIL_TEMPLATE);
+
+        return $this;
     }
 
     /**
@@ -49,11 +62,16 @@ class Index implements ObserverInterface
      */
     private function isEmailNotificationEnabled(): int
     {
-        return $this->dataHelper->getAdminEmailEnableNotification();
+        return $this->emailSender->getAdminEmailEnableNotification();
     }
 
-    private function sendEmail()
+    /**
+     * @param $postData
+     * @param $emailTemplateId
+     * @param null $adminEmailAddress
+     */
+    private function sendEmail($postData, $emailTemplateId, $adminEmailAddress = null): void
     {
-
+        $this->emailSender->sendNotification($postData, $emailTemplateId, $adminEmailAddress);
     }
 }
