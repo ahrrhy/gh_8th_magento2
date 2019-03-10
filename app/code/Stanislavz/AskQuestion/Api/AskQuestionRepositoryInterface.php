@@ -4,7 +4,7 @@ namespace Stanislavz\AskQuestion\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Stanislavz\AskQuestion\Api\Data\AskQuestionInterface;
-use Stanislavz\AskQuestion\Api\Data\AskQuestionSearchResultInterface;
+use Stanislavz\AskQuestion\Api\Data\AskQuestionSearchResultsInterface;
 
 /**
  * Interface AskQuestionRepositoryInterface
@@ -16,34 +16,34 @@ interface AskQuestionRepositoryInterface
     /**
      * Save question.
      *
-     * @param AskQuestionInterface $askQuestion
-     * @return AskQuestionInterface
+     * @param \Stanislavz\AskQuestion\Api\Data\AskQuestionInterface $askQuestion
+     * @return \Stanislavz\AskQuestion\Api\Data\AskQuestionInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function save(AskQuestionInterface $askQuestion): AskQuestionInterface;
+    public function save(AskQuestionInterface $askQuestion);
 
     /**
      * Retrieve question.
      *
      * @param int $questionId
-     * @return AskQuestionInterface
+     * @return \Stanislavz\AskQuestion\Api\Data\AskQuestionInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getById($questionId): AskQuestionInterface;
+    public function getById($questionId);
 
     /**
      * Retrieve question matching the specified criteria.
      *
      * @param SearchCriteriaInterface $searchCriteria
-     * @return AskQuestionSearchResultInterface
+     * @return \Stanislavz\AskQuestion\Api\Data\AskQuestionSearchResultsInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getList(SearchCriteriaInterface $searchCriteria): AskQuestionSearchResultInterface;
+    public function getList(SearchCriteriaInterface $searchCriteria);
 
     /**
      * Delete question.
      *
-     * @param AskQuestionInterface $askQuestion
+     * @param \Stanislavz\AskQuestion\Api\Data\AskQuestionInterface $askQuestion
      * @return bool true on success
      * @throws \Magento\Framework\Exception\LocalizedException
      */

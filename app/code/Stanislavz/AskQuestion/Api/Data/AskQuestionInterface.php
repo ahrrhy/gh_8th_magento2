@@ -22,7 +22,7 @@ interface AskQuestionInterface
      * @param int $id
      * @return AskQuestionInterface
      */
-    public function setId($id): AskQuestionInterface;
+    public function setId($id);
 
     /**
      * Gets the created-at timestamp for the question.
@@ -44,7 +44,7 @@ interface AskQuestionInterface
      * @param string $name
      * @return AskQuestionInterface
      */
-    public function setName($name): AskQuestionInterface;
+    public function setName($name);
 
     /**
      * Get customer Email
@@ -59,7 +59,7 @@ interface AskQuestionInterface
      * @param string $email
      * @return AskQuestionInterface
      */
-    public function setEmail($email): AskQuestionInterface;
+    public function setEmail($email);
 
     /**
      * Get customer Phone
@@ -74,7 +74,7 @@ interface AskQuestionInterface
      * @param string $phone
      * @return AskQuestionInterface
      */
-    public function setPhone($phone): AskQuestionInterface;
+    public function setPhone($phone);
 
     /**
      * Get product ProductName
@@ -89,7 +89,7 @@ interface AskQuestionInterface
      * @param string $productName
      * @return AskQuestionInterface
      */
-    public function setProductName($productName): AskQuestionInterface;
+    public function setProductName($productName);
 
     /**
      * Get product Sku
@@ -104,7 +104,7 @@ interface AskQuestionInterface
      * @param string $sku
      * @return AskQuestionInterface
      */
-    public function setSku($sku): AskQuestionInterface;
+    public function setSku($sku);
 
     /**
      * Get Question
@@ -119,7 +119,7 @@ interface AskQuestionInterface
      * @param string $question
      * @return AskQuestionInterface
      */
-    public function setQuestion($question): AskQuestionInterface;
+    public function setQuestion($question);
 
     /**
      * Get QuestionStatus
@@ -134,7 +134,7 @@ interface AskQuestionInterface
      * @param string $status
      * @return AskQuestionInterface
      */
-    public function setStatus($status): AskQuestionInterface;
+    public function setStatus($status);
 
     /**
      * Get StoreId
@@ -149,5 +149,5 @@ interface AskQuestionInterface
      * @param string $storeId
      * @return AskQuestionInterface
      */
-    public function setStoreId($storeId): AskQuestionInterface;
+    public function setStoreId($storeId);
 }

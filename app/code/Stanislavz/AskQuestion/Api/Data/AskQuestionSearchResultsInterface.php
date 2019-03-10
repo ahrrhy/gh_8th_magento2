@@ -5,11 +5,11 @@ namespace Stanislavz\AskQuestion\Api\Data;
 use Magento\Framework\Api\SearchResultsInterface;
 
 /**
- * Interface AskQuestionSearchResultInterface
+ * Interface AskQuestionSearchResultsInterface
  * @package Stanislavz\AskQuestion\Api\Data
  * @api
  */
-interface AskQuestionSearchResultInterface extends SearchResultsInterface
+interface AskQuestionSearchResultsInterface extends SearchResultsInterface
 {
     /**
      * Get request samples list.

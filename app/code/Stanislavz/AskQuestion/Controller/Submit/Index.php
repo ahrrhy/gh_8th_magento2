@@ -2,6 +2,8 @@
 
 namespace Stanislavz\AskQuestion\Controller\Submit;
 
+use Stanislavz\AskQuestion\Api\Data\AskQuestionInterface;
+use Stanislavz\AskQuestion\Api\AskQuestionRepositoryInterface;
 use Stanislavz\AskQuestion\Model\AskQuestion;
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\Controller\ResultFactory;
@@ -26,6 +28,8 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     private $formKeyValidator;
 
+    private $askQuestionRepoitoryInterface;
+
     /**
      * Index constructor.
      * @param \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
@@ -35,11 +39,13 @@ class Index extends \Magento\Framework\App\Action\Action
     public function __construct(
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         \Stanislavz\AskQuestion\Model\AskQuestionFactory $askQuestionFactory,
+        AskQuestionRepositoryInterface $askQuestionRepoitoryInterface,
         \Magento\Framework\App\Action\Context $context
     ) {
         parent::__construct($context);
         $this->formKeyValidator   = $formKeyValidator;
         $this->askQuestionFactory = $askQuestionFactory;
+        $this->askQuestionRepoitoryInterface = $askQuestionRepoitoryInterface;
     }
 
     /**
@@ -75,7 +81,7 @@ class Index extends \Magento\Framework\App\Action\Action
                 ->setProductName($request->getParam('product_name'))
                 ->setSku($request->getParam('sku'))
                 ->setQuestion($request->getParam('question'));
-            $askQuestion->save();
+            $this->askQuestionRepoitoryInterface->save($askQuestion);
 
         } catch (LocalizedException $e) {
             $data = [
