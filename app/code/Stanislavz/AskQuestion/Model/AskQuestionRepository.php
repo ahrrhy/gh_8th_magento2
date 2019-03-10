@@ -108,13 +108,10 @@ class AskQuestionRepository implements AskQuestionRepositoryInterface
     }
 
     /**
-     * Retrieve question matching the specified criteria.
-     *
      * @param SearchCriteriaInterface $searchCriteria
      * @return AskQuestionSearchResultsInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getList(SearchCriteriaInterface $searchCriteria): AskQuestionSearchResultsInterface
+    public function getList(SearchCriteriaInterface $searchCriteria)
     {
         /** @var AskQuestionSearchResultsInterface $searchResults */
         $searchResults = $this->searchResultsFactory->create();
