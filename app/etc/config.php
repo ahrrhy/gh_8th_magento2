@@ -145,6 +145,7 @@ return [
         'Magento_WishlistSampleData' => 1,
         'Stanislavz_AdminMenuElement' => 1,
         'Stanislavz_AskQuestion' => 1,
+        'Stanislavz_Cli' => 1,
         'Stanislavz_CustomWidgetTry' => 1,
         'Stanislavz_EditProductForm' => 1,
         'Stanislavz_LearnJSinit' => 1,
