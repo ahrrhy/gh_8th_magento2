@@ -15,10 +15,6 @@ class ChangeStatus
      * @var \Stanislavz\AskQuestion\Model\ResourceModel\AskQuestion\CollectionFactory
      */
     private $collectionFactory;
-    /**
-     * @var \Magento\Framework\DB\TransactionFactory
-     */
-    private $transactionFactory;
 
     /**
      * @var DateTime
