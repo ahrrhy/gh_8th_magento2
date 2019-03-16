@@ -11,9 +11,9 @@ use Magento\Store\Model\ScopeInterface;
  */
 class Data extends AbstractHelper
 {
-    public const XML_PATH_STANISLAVZ_CRON_ENABLE = 'stanislavz_crone_options/cron/enable';
+    public const XML_PATH_STANISLAVZ_CRON_ENABLE = 'stanislavz_cron_options/cron/enable';
 
-    public const XML_PATH_STANISLAVZ_CRON_DAYS = 'stanislavz_crone_options/cron/days';
+    public const XML_PATH_STANISLAVZ_CRON_DAYS = 'stanislavz_cron_options/cron/days';
 
     /**
      * @param null $storeId
