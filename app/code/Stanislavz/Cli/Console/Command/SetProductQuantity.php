@@ -10,7 +10,6 @@ use Magento\Framework\App\Area;
 use Magento\Framework\App\State;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
 use Magento\Catalog\Model\ProductRepository;
-use Magento\CatalogInventory\Api\StockStateInterface;
 
 /**
  * Class SetProductQuantity
@@ -21,6 +20,7 @@ class SetProductQuantity extends ConsoleCommand
     /** @var string result messages*/
     public const MESSAGE_SUCCESS = 'operation completed successfully';
     public const MESSAGE_ERROR = 'operation failed';
+    public const MESSAGE_ERROR_NO_SUCH_PRODUCT = 'operation failed, incorrect product id';
 
     /**
      * @var ProductRepository
@@ -37,24 +37,20 @@ class SetProductQuantity extends ConsoleCommand
      */
     private $state;
 
-    private $stockItemInterface;
-
     /**
      * SetProductQuantity constructor.
      * @param ProductRepository $productRepository
      * @param StockRegistryInterface $stockRegistry
-     * @param StockStateInterface $stockItemInterface
      * @param State $state
      * @param string|null $name
+     * @throws \Symfony\Component\Console\Exception\LogicException
      */
     public function __construct(
         ProductRepository $productRepository,
         StockRegistryInterface $stockRegistry,
-        StockStateInterface $stockItemInterface,
         State $state,
         ?string $name = null
     ) {
-        $this->stockItemInterface = $stockItemInterface;
         $this->productRepository = $productRepository;
         $this->state = $state;
         $this->stockRegistry = $stockRegistry;
@@ -88,6 +84,9 @@ class SetProductQuantity extends ConsoleCommand
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|void|null
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -95,22 +94,22 @@ class SetProductQuantity extends ConsoleCommand
             $this->state->setAreaCode(Area::AREA_ADMINHTML);
             $productId = (int) $input->getArgument('productId');
             $newProductQuantity = (int) $input->getArgument('quantity');
-            /** @var \Magento\Catalog\Model\Product $product */
+            /**
+             * to save new product quantity I need to get product sku
+             * @var \Magento\Catalog\Model\Product $product
+             */
             $product = $this->productRepository->getById($productId);
-            $stockItemInterface = $this->stockItemInterface;
+
             /** @var \Magento\CatalogInventory\Model\Stock\Item $stockItem */
             $stockItem = $this->stockRegistry->getStockItem($productId);
-
-            if ($product) {
-                $stockItem->setQty($newProductQuantity);
-            }
+            $stockItem->setQty($newProductQuantity);
             $this->stockRegistry->updateStockItemBySku($product->getSku(), $stockItem);
             $output->writeln("<info>" . self::MESSAGE_SUCCESS
                 . "Product $productId quantity changed to $newProductQuantity"
                 . "</info>");
 
         } catch (\Exception $e) {
-            $output->writeln("<error>". self::MESSAGE_ERROR . "{$e->getMessage()}<error>");
+            $output->writeln("<error>". self::MESSAGE_ERROR . " {$e->getMessage()}<error>");
         }
     }
 }
