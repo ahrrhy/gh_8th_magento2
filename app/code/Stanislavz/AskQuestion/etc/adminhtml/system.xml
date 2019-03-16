@@ -4,11 +4,11 @@
         <tab id="geekhub" translate="label" sortOrder="10">
             <label>GeekHub</label>
         </tab>
-        <section id="stanislavz_crone_options" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="stanislavz_cron_options" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
-            <label>Crone Job Management Options</label>
+            <label>Cron Job Management Options</label>
             <tab>geekhub</tab>
-            <resource>Stanislavz_AskQuestion::stanislavz_crone_options</resource>
+            <resource>Stanislavz_AskQuestion::stanislavz_cron_options</resource>
             <group id="general"
                    translate="label"
                    type="text"
