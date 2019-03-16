@@ -20,7 +20,6 @@ class SetProductQuantity extends ConsoleCommand
     /** @var string result messages*/
     public const MESSAGE_SUCCESS = 'operation completed successfully';
     public const MESSAGE_ERROR = 'operation failed';
-    public const MESSAGE_ERROR_NO_SUCH_PRODUCT = 'operation failed, incorrect product id';
 
     /**
      * @var ProductRepository
@@ -109,7 +108,7 @@ class SetProductQuantity extends ConsoleCommand
                 . "</info>");
 
         } catch (\Exception $e) {
-            $output->writeln("<error>". self::MESSAGE_ERROR . " {$e->getMessage()}<error>");
+            $output->writeln("<error>". self::MESSAGE_ERROR . "{$e->getMessage()}<error>");
         }
     }
 }
