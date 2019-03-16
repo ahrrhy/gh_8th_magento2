@@ -22,6 +22,9 @@ class QuestionStatus
      */
     private $statusModel;
 
+    /**
+     * @var Data
+     */
     private $helperData;
 
     /**
