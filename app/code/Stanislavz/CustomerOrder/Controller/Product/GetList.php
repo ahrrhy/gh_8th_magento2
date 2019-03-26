@@ -54,6 +54,7 @@ class GetList extends \Magento\Framework\App\Action\Action
         $this->searchCriteriaBuilder->setCurrentPage(1);
         $products = $this->productRepository->getList($this->searchCriteriaBuilder->create())->getItems();
         $data = [];
+        /** @var \Magento\Catalog\Model\Product $product */
         foreach ($products as $product) {
             $data[] = [
                 'id' => $product->getId(),
