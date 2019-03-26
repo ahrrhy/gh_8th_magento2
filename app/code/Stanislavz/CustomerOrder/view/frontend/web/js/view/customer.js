@@ -43,9 +43,6 @@ define([
 
             var self = this;
             this.initCustomerList();
-            // this.responseData.subscribe(function(data){
-            //     self.customers(data.customers);
-            // });
 
             return this;
         },
