@@ -55,7 +55,6 @@ class Questions extends \Magento\Framework\View\Element\Template
 
     /**
      * @return Collection
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getQuestions(): Collection
     {
