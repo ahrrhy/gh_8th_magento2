@@ -13,10 +13,10 @@ use Stanislavz\AskQuestion\Model\AskQuestion;
 use Magento\Framework\DB\Transaction;
 use Magento\Customer\Setup\CustomerSetupFactory;
 use Magento\Customer\Model\Customer;
-use Magento\Eav\Model\Entity\Attribute\Set as AttributeSet;
-use Magento\Eav\Model\Entity\Attribute\SetFactory as AttributeSetFactory;
 use Magento\Customer\Model\ResourceModel\Attribute;
 use Magento\Eav\Model\Config;
+use Magento\Customer\Api\Data\GroupInterfaceFactory;
+use Magento\Customer\Api\GroupRepositoryInterface;
 
 /**
  * Class UpgradeData
@@ -24,6 +24,7 @@ use Magento\Eav\Model\Config;
  */
 class UpgradeData implements UpgradeDataInterface
 {
+    public const DISALLOWED_QUESTION_CUSTOMER_GROUP = 'Disallow questions group';
     /**
      * @var \Stanislavz\AskQuestion\Model\AskQuestionFactory
      */
@@ -45,12 +46,18 @@ class UpgradeData implements UpgradeDataInterface
     /** @var Attribute */
     private $attributeResource;
 
+    private $groupFactory;
+
+    private $groupRepository;
+
     /**
      * UpgradeData constructor.
      * @param \Stanislavz\AskQuestion\Model\AskQuestionFactory $askQuestionFactory
      * @param \Magento\Framework\DB\TransactionFactory $transactionFactory
      * @param \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
      * @param Attribute $attributeResource
+     * @param GroupInterfaceFactory $groupFactory
+     * @param GroupRepositoryInterface $groupRepository
      * @param Config $eavConfig
      */
     public function __construct(
@@ -58,6 +65,8 @@ class UpgradeData implements UpgradeDataInterface
         \Magento\Framework\DB\TransactionFactory $transactionFactory,
         \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory,
         \Magento\Customer\Model\ResourceModel\Attribute $attributeResource,
+        GroupInterfaceFactory $groupFactory,
+        GroupRepositoryInterface $groupRepository,
         Config $eavConfig
     ) {
         $this->eavSetupFactory = $eavSetupFactory;
@@ -65,12 +74,18 @@ class UpgradeData implements UpgradeDataInterface
         $this->_transactionFactory = $transactionFactory;
         $this->eavConfig = $eavConfig;
         $this->attributeResource = $attributeResource;
+        $this->groupFactory = $groupFactory;
+        $this->groupRepository = $groupRepository;
     }
 
     /**
      * @param ModuleDataSetupInterface $setup
      * @param ModuleContextInterface $context
+     * @throws \Magento\Framework\Exception\AlreadyExistsException
+     * @throws \Magento\Framework\Exception\InputException
      * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws \Magento\Framework\Exception\State\InvalidTransitionException
      */
     public function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
@@ -161,6 +176,12 @@ class UpgradeData implements UpgradeDataInterface
             ]
         );
         $this->attributeResource->save($attribute);
+
+        // Create the new group
+        /** @var \Magento\Customer\Model\Group $group */
+        $group = $this->groupFactory->create();
+        $group->setCode(self::DISALLOWED_QUESTION_CUSTOMER_GROUP);
+        $this->groupRepository->save($group);
 
         /** End setup */
         $setup->endSetup();
