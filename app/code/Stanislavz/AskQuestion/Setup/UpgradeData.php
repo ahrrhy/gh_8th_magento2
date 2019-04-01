@@ -198,7 +198,6 @@ class UpgradeData implements UpgradeDataInterface
             ]
         );
 
-        /** @var  $customAddressAttribute */
         $customAddressAttribute = $this->eavConfig->getAttribute(
             AddressMetadataInterface::ENTITY_TYPE_ADDRESS,
             self::CUSTOMER_CITY_DISTRICT
