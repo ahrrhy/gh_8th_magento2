@@ -17,6 +17,7 @@ use Magento\Customer\Model\ResourceModel\Attribute;
 use Magento\Eav\Model\Config;
 use Magento\Customer\Api\Data\GroupInterfaceFactory;
 use Magento\Customer\Api\GroupRepositoryInterface;
+use Magento\Customer\Api\AddressMetadataInterface;
 
 /**
  * Class UpgradeData
@@ -25,6 +26,7 @@ use Magento\Customer\Api\GroupRepositoryInterface;
 class UpgradeData implements UpgradeDataInterface
 {
     public const DISALLOWED_QUESTION_CUSTOMER_GROUP = 'Disallow questions group';
+    public const CUSTOMER_CITY_DISTRICT = 'city_district';
     /**
      * @var \Stanislavz\AskQuestion\Model\AskQuestionFactory
      */
@@ -146,6 +148,7 @@ class UpgradeData implements UpgradeDataInterface
             ]
         );
 
+        // Add customer attribute
         /** @var EavSetup $eavSetupFactory */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
 
@@ -176,6 +179,41 @@ class UpgradeData implements UpgradeDataInterface
             ]
         );
         $this->attributeResource->save($attribute);
+
+        // Add customer Address attribute
+        /** @var EavSetup $eavSetupFactory */
+        $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
+
+        $eavSetup->addAttribute(
+            AddressMetadataInterface::ENTITY_TYPE_ADDRESS,
+            self::CUSTOMER_CITY_DISTRICT,
+            [
+                'label'      => __('City District'),
+                'input'      => 'text',
+                'visible'    => true,
+                'required'   => false,
+                'position'   => 150,
+                'sort_order' => 150,
+                'system'     => false
+            ]
+        );
+
+        /** @var  $customAddressAttribute */
+        $customAddressAttribute = $this->eavConfig->getAttribute(
+            AddressMetadataInterface::ENTITY_TYPE_ADDRESS,
+            self::CUSTOMER_CITY_DISTRICT
+        );
+
+        $customAddressAttribute->setData(
+            'used_in_forms',
+            [
+                'adminhtml_customer_address',
+                'customer_address_edit',
+                'customer_register_address'
+            ]
+        );
+
+        $this->attributeResource->save($customAddressAttribute);
 
         // Create the new group
         /** @var \Magento\Customer\Model\Group $group */
