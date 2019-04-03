@@ -20,7 +20,6 @@ class SetProductQuantity extends ConsoleCommand
     /** @var string result messages*/
     public const MESSAGE_SUCCESS = 'operation completed successfully';
     public const MESSAGE_ERROR = 'operation failed';
-    public const MESSAGE_ERROR_NO_SUCH_PRODUCT = 'no such product found';
 
     /**
      * @var ProductRepository
@@ -43,6 +42,7 @@ class SetProductQuantity extends ConsoleCommand
      * @param StockRegistryInterface $stockRegistry
      * @param State $state
      * @param string|null $name
+     * @throws \Symfony\Component\Console\Exception\LogicException
      */
     public function __construct(
         ProductRepository $productRepository,
@@ -83,6 +83,9 @@ class SetProductQuantity extends ConsoleCommand
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|void|null
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -90,17 +93,14 @@ class SetProductQuantity extends ConsoleCommand
             $this->state->setAreaCode(Area::AREA_ADMINHTML);
             $productId = (int) $input->getArgument('productId');
             $newProductQuantity = (int) $input->getArgument('quantity');
-            /** @var \Magento\Catalog\Model\Product $product */
+            /**
+             * to save new product quantity I need to get product sku
+             * @var \Magento\Catalog\Model\Product $product
+             */
             $product = $this->productRepository->getById($productId);
+
             /** @var \Magento\CatalogInventory\Model\Stock\Item $stockItem */
             $stockItem = $this->stockRegistry->getStockItem($productId);
-
-            if (!$product) {
-                $output->writeln('<error>'. self::MESSAGE_ERROR_NO_SUCH_PRODUCT . '<error>');
-
-                return;
-            }
-
             $stockItem->setQty($newProductQuantity);
             $this->stockRegistry->updateStockItemBySku($product->getSku(), $stockItem);
             $output->writeln("<info>" . self::MESSAGE_SUCCESS
