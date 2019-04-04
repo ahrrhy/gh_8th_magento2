@@ -3,7 +3,6 @@
 namespace Stanislavz\AskQuestion\Controller\Submit;
 
 use Stanislavz\AskQuestion\Model\Notification\EmailSender;
-use Stanislavz\AskQuestion\Helper\Data;
 use Stanislavz\AskQuestion\Model\AskQuestion;
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\Controller\ResultFactory;
@@ -31,29 +30,23 @@ class Index extends \Magento\Framework\App\Action\Action
     /** @var EmailSender */
     private $emailSender;
 
-    /** @var Data */
-    private $helperData;
-
     /**
      * Index constructor.
      * @param \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
      * @param \Stanislavz\AskQuestion\Model\AskQuestionFactory $askQuestionFactory
      * @param \Magento\Framework\App\Action\Context $context
      * @param EmailSender $emailSender
-     * @param Data $helperData
      */
     public function __construct(
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         \Stanislavz\AskQuestion\Model\AskQuestionFactory $askQuestionFactory,
         \Magento\Framework\App\Action\Context $context,
-        EmailSender $emailSender,
-        Data $helperData
+        EmailSender $emailSender
     ) {
         parent::__construct($context);
         $this->formKeyValidator   = $formKeyValidator;
         $this->askQuestionFactory = $askQuestionFactory;
         $this->emailSender = $emailSender;
-        $this->helperData  =$helperData;
     }
 
     /**
@@ -108,21 +101,8 @@ class Index extends \Magento\Framework\App\Action\Action
         return $controllerResult->setData($data);
     }
 
-    /**
-     * @return int
-     */
-    private function isEmailNotificationEnabled(): int
-    {
-        return $this->helperData->getAdminEmailEnableNotification();
-    }
-
-
     private function sendEmailNotification(): void
     {
-        if (!$this->isEmailNotificationEnabled()) {
-            return;
-        }
-
         /** @var \Magento\Framework\App\Request\Http $request */
         $request = $this->getRequest();
         $postData = $request->getPostValue();
@@ -131,7 +111,7 @@ class Index extends \Magento\Framework\App\Action\Action
         $this->sendEmail(
             $postData,
             EmailSender::ADMIN_ASKQUESTION_EMAIL_TEMPLATE,
-            $this->helperData->getAdminEmailAddress()
+            $this->emailSender->getAdminEmailAddress()
         );
         // send customer notification
         $this->sendEmail($postData, EmailSender::CUSTOMER_ASKQUESTION_EMAIL_TEMPLATE);

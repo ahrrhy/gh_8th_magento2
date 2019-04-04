@@ -53,6 +53,10 @@ class EmailSender
      */
     public function sendNotification($receiverData, $emailTemplateID, $adminEmailAddress = null): void
     {
+        if (!$this->isEmailNotificationEnabled()) {
+            return;
+        }
+
         $sender = [
             'name' => $this->helperData->getStoreName(),
             'email' => $this->helperData->getStoreEmail(),
@@ -110,5 +114,21 @@ class EmailSender
         }
 
         return $addTo;
+    }
+
+    /**
+     * @return int
+     */
+    private function isEmailNotificationEnabled(): int
+    {
+        return $this->helperData->getAdminEmailEnableNotification();
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdminEmailAddress(): string
+    {
+        return $this->helperData->getAdminEmailAddress();
     }
 }
