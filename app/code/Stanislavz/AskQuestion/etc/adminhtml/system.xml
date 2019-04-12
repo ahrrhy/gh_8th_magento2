@@ -37,6 +37,35 @@
                     <label>Quantity of Days</label>
                 </field>
             </group>
+            <group id="email"
+                           translate="label"
+                           sortOrder="15"
+                           showInDefault="1"
+                           showInWebsite="1"
+                           showInStore="1">
+                <label>Email Configuration</label>
+                <field id="enable"
+                       translate="label"
+                       type="select"
+                       sortOrder="1"
+                       showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1"
+                >
+                    <label>Enable email notification</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+                <field id="admin_email"
+                       translate="label"
+                       type="text"
+                       sortOrder="1"
+                       showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1"
+                >
+                    <label>Admin email address</label>
+                </field>
+            </group>
             <group id="test"
                    sortOrder="30"
                    translate="label"
