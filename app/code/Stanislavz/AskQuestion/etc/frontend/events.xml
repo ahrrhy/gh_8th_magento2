@@ -6,9 +6,4 @@
                   instance="Stanislavz\AskQuestion\Observer\Catalog\Block\Product\View"
         />
     </event>
-    <event name="controller_action_predispatch_ask_question_submit_index">
-        <observer name="stanislavz_askquestion_email_notification"
-                instance="Stanislavz\AskQuestion\Observer\AskQuestion\Controller\Submit\Index"
-        />
-    </event>
 </config>
