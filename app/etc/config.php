@@ -153,6 +153,7 @@ return [
         'Stanislavz_LearnRoutes' => 1,
         'Stanislavz_PhpOop' => 1,
         'Stanislavz_ProductTab' => 1,
+        'Stanislavz_SamplePaymentGateway' => 1,
         'Temando_Shipping' => 1,
         'Vertex_Tax' => 1
     ]
