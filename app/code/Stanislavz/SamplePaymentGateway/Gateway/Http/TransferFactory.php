@@ -31,7 +31,7 @@ class TransferFactory implements TransferFactoryInterface
      */
     public function create(array $request)
     {
-        return $this->transferBuilder
+        $transferBuilder = $this->transferBuilder
             ->setBody($request)
             ->setMethod('POST')
             ->setHeaders(
@@ -42,5 +42,6 @@ class TransferFactory implements TransferFactoryInterface
                 ]
             )
             ->build();
+        return $transferBuilder;
     }
 }

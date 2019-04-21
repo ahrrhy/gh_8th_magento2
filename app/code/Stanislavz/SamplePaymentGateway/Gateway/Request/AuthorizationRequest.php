@@ -38,20 +38,9 @@ class AuthorizationRequest implements BuilderInterface
         ) {
             throw new \InvalidArgumentException('Payment data object should be provided');
         }
-        /** @var PaymentDataObjectInterface $payment */
-        $payment = $buildSubject['payment'];
-        $order = $payment->getOrder();
-        $address = $order->getShippingAddress();
+
         return [
-            'TXN_TYPE' => 'A',
-            'INVOICE' => $order->getOrderIncrementId(),
-            'AMOUNT' => $order->getGrandTotalAmount(),
-            'CURRENCY' => $order->getCurrencyCode(),
-            'EMAIL' => $address->getEmail(),
-            'MERCHANT_KEY' => $this->config->getValue(
-                'merchant_gateway_key',
-                $order->getStoreId()
-            )
+            'testAuthorization' => 'test'
         ];
     }
 }

@@ -57,6 +57,11 @@
     <virtualType name="SamplePaymentGatewayAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
         <arguments>
             <argument name="builders" xsi:type="array">
+                <item name="localPrice" xsi:type="string">Stanislavz\SamplePaymentGateway\Gateway\Request\LocalPriceDataBuilder</item>
+                <item name="urlData" xsi:type="string">Stanislavz\SamplePaymentGateway\Gateway\Request\UrlDataBuilder</item>
+                <item name="description" xsi:type="string">Stanislavz\SamplePaymentGateway\Gateway\Request\DescriptionDataBuilder</item>
+                <item name="kyc" xsi:type="string">Stanislavz\SamplePaymentGateway\Gateway\Request\KycDataBuilder</item>
+                <item name="metadata" xsi:type="string">Stanislavz\SamplePaymentGateway\Gateway\Request\MetadataDataBuilder</item>
                 <item name="transaction" xsi:type="string">Stanislavz\SamplePaymentGateway\Gateway\Request\AuthorizationRequest</item>
                 <item name="mockData" xsi:type="string">Stanislavz\SamplePaymentGateway\Gateway\Request\MockDataRequest</item>
             </argument>

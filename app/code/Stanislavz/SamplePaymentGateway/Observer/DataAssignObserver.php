@@ -13,18 +13,17 @@ class DataAssignObserver extends AbstractDataAssignObserver
 {
     /**
      * @param Observer $observer
-     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function execute(Observer $observer)
     {
-        $method = $this->readMethodArgument($observer);
         $data = $this->readDataArgument($observer);
-        $paymentInfo = $method->getInfoInstance();
+        $paymentInfo = $this->readPaymentModelArgument($observer);
         if ($data->getDataByKey('transaction_result') !== null) {
             $paymentInfo->setAdditionalInformation(
                 'transaction_result',
                 $data->getDataByKey('transaction_result')
             );
         }
+
     }
 }
