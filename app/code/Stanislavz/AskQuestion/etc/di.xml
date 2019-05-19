@@ -16,4 +16,10 @@
             </argument>
         </arguments>
     </type>
+    <preference for="Stanislavz\AskQuestion\Api\Data\AskQuestionSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults" />
+    <preference for="Stanislavz\AskQuestion\Api\Data\AskQuestionInterface"
+                type="Stanislavz\AskQuestion\Model\AskQuestion" />
+    <preference for="Stanislavz\AskQuestion\Api\AskQuestionRepositoryInterface"
+                type="Stanislavz\AskQuestion\Model\AskQuestionRepository" />
 </config>

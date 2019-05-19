@@ -2,6 +2,8 @@
 
 namespace Stanislavz\AskQuestion\Controller\Submit;
 
+use Stanislavz\AskQuestion\Api\Data\AskQuestionInterface;
+use Stanislavz\AskQuestion\Api\AskQuestionRepositoryInterface;
 use Stanislavz\AskQuestion\Model\Notification\EmailSender;
 use Stanislavz\AskQuestion\Model\AskQuestion;
 use Magento\Framework\App\Request\Http;
@@ -27,6 +29,9 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     private $formKeyValidator;
 
+    /** @var AskQuestionRepositoryInterface */
+    private $askQuestionRepoitoryInterface;
+
     /** @var EmailSender */
     private $emailSender;
 
@@ -34,18 +39,21 @@ class Index extends \Magento\Framework\App\Action\Action
      * Index constructor.
      * @param \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
      * @param \Stanislavz\AskQuestion\Model\AskQuestionFactory $askQuestionFactory
+     * @param AskQuestionRepositoryInterface $askQuestionRepoitoryInterface
      * @param \Magento\Framework\App\Action\Context $context
      * @param EmailSender $emailSender
      */
     public function __construct(
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         \Stanislavz\AskQuestion\Model\AskQuestionFactory $askQuestionFactory,
+        AskQuestionRepositoryInterface $askQuestionRepoitoryInterface,
         \Magento\Framework\App\Action\Context $context,
         EmailSender $emailSender
     ) {
         parent::__construct($context);
         $this->formKeyValidator   = $formKeyValidator;
         $this->askQuestionFactory = $askQuestionFactory;
+        $this->askQuestionRepoitoryInterface = $askQuestionRepoitoryInterface;
         $this->emailSender = $emailSender;
     }
 
@@ -82,7 +90,7 @@ class Index extends \Magento\Framework\App\Action\Action
                 ->setProductName($request->getParam('product_name'))
                 ->setSku($request->getParam('sku'))
                 ->setQuestion($request->getParam('question'));
-            $askQuestion->save();
+            $this->askQuestionRepoitoryInterface->save($askQuestion);
 
             $this->sendEmailNotification();
 
