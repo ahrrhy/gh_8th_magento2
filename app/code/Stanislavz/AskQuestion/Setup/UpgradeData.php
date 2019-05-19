@@ -4,7 +4,6 @@ namespace Stanislavz\AskQuestion\Setup;
 
 use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
 use Magento\Eav\Setup\EavSetup;
-use Magento\Catalog\Setup\CategorySetup;
 use Magento\Eav\Model\Entity\Attribute\Source\Boolean;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
@@ -12,6 +11,13 @@ use Magento\Framework\Setup\UpgradeDataInterface;
 use Magento\Store\Model\Store;
 use Stanislavz\AskQuestion\Model\AskQuestion;
 use Magento\Framework\DB\Transaction;
+use Magento\Customer\Setup\CustomerSetupFactory;
+use Magento\Customer\Model\Customer;
+use Magento\Customer\Model\ResourceModel\Attribute;
+use Magento\Eav\Model\Config;
+use Magento\Customer\Api\Data\GroupInterfaceFactory;
+use Magento\Customer\Api\GroupRepositoryInterface;
+use Magento\Customer\Api\AddressMetadataInterface;
 
 /**
  * Class UpgradeData
@@ -19,6 +25,8 @@ use Magento\Framework\DB\Transaction;
  */
 class UpgradeData implements UpgradeDataInterface
 {
+    public const DISALLOWED_QUESTION_CUSTOMER_GROUP = 'Disallow questions group';
+    public const CUSTOMER_CITY_DISTRICT = 'city_district';
     /**
      * @var \Stanislavz\AskQuestion\Model\AskQuestionFactory
      */
@@ -29,29 +37,58 @@ class UpgradeData implements UpgradeDataInterface
      */
     private $eavSetupFactory;
 
-    private $categorySetupFactory;
     /**
      * @var \Magento\Framework\DB\TransactionFactory
      */
     private $_transactionFactory;
 
+    /** @var Config */
+    private $eavConfig;
+
+    /** @var Attribute */
+    private $attributeResource;
+
+    private $groupFactory;
+
+    private $groupRepository;
+
     /**
      * UpgradeData constructor.
      * @param \Stanislavz\AskQuestion\Model\AskQuestionFactory $askQuestionFactory
      * @param \Magento\Framework\DB\TransactionFactory $transactionFactory
+     * @param \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
+     * @param Attribute $attributeResource
+     * @param GroupInterfaceFactory $groupFactory
+     * @param GroupRepositoryInterface $groupRepository
+     * @param Config $eavConfig
      */
     public function __construct(
         \Stanislavz\AskQuestion\Model\AskQuestionFactory $askQuestionFactory,
         \Magento\Framework\DB\TransactionFactory $transactionFactory,
         \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory,
-        \Magento\Catalog\Setup\CategorySetupFactory $categorySetupFactory
+        \Magento\Customer\Model\ResourceModel\Attribute $attributeResource,
+        GroupInterfaceFactory $groupFactory,
+        GroupRepositoryInterface $groupRepository,
+        Config $eavConfig
     ) {
         $this->eavSetupFactory = $eavSetupFactory;
         $this->_askQuestionFactory = $askQuestionFactory;
         $this->_transactionFactory = $transactionFactory;
-        $this->categorySetupFactory = $categorySetupFactory;
+        $this->eavConfig = $eavConfig;
+        $this->attributeResource = $attributeResource;
+        $this->groupFactory = $groupFactory;
+        $this->groupRepository = $groupRepository;
     }
 
+    /**
+     * @param ModuleDataSetupInterface $setup
+     * @param ModuleContextInterface $context
+     * @throws \Magento\Framework\Exception\AlreadyExistsException
+     * @throws \Magento\Framework\Exception\InputException
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws \Magento\Framework\Exception\State\InvalidTransitionException
+     */
     public function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
         /** Start setup */
@@ -110,6 +147,78 @@ class UpgradeData implements UpgradeDataInterface
                 'apply_to' => ''
             ]
         );
+
+        // Add customer attribute
+        /** @var EavSetup $eavSetupFactory */
+        $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
+
+        $eavSetup->addAttribute(
+            Customer::ENTITY,
+            'disallow_ask_question',
+            [
+                'type'         => 'int',
+                'label'        => 'Disallow Ask Question',
+                'input'        => 'boolean',
+                'required'     => true,
+                'visible'      => true,
+                'user_defined' => true,
+                'sort_order' => 11,
+                'position' => 11,
+                'system' => 0,
+                'source' => Boolean::class,
+                'default' => Boolean::VALUE_NO
+            ]
+        );
+
+        $attribute = $this->eavConfig->getAttribute(
+            Customer::ENTITY,
+            'disallow_ask_question'
+        )->setData(
+            [
+                'used_in_forms' => ['adminhtml_customer', 'customer_account_edit'],
+            ]
+        );
+        $this->attributeResource->save($attribute);
+
+        // Add customer Address attribute
+        /** @var EavSetup $eavSetupFactory */
+        $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
+
+        $eavSetup->addAttribute(
+            AddressMetadataInterface::ENTITY_TYPE_ADDRESS,
+            self::CUSTOMER_CITY_DISTRICT,
+            [
+                'label'      => __('City District'),
+                'input'      => 'text',
+                'visible'    => true,
+                'required'   => false,
+                'position'   => 150,
+                'sort_order' => 150,
+                'system'     => false
+            ]
+        );
+
+        $customAddressAttribute = $this->eavConfig->getAttribute(
+            AddressMetadataInterface::ENTITY_TYPE_ADDRESS,
+            self::CUSTOMER_CITY_DISTRICT
+        );
+
+        $customAddressAttribute->setData(
+            'used_in_forms',
+            [
+                'adminhtml_customer_address',
+                'customer_address_edit',
+                'customer_register_address'
+            ]
+        );
+
+        $this->attributeResource->save($customAddressAttribute);
+
+        // Create the new group
+        /** @var \Magento\Customer\Model\Group $group */
+        $group = $this->groupFactory->create();
+        $group->setCode(self::DISALLOWED_QUESTION_CUSTOMER_GROUP);
+        $this->groupRepository->save($group);
 
         /** End setup */
         $setup->endSetup();

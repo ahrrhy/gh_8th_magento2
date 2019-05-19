@@ -5,5 +5,8 @@
         <route id="ask_question" frontName="ask-question">
             <module name="Stanislavz_AskQuestion"/>
         </route>
+        <route id="stanislavz" frontName="stanislavz">
+            <module name="Stanislavz_AskQuestion"/>
+        </route>
     </router>
 </config>

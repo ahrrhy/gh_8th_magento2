@@ -3,7 +3,7 @@
 namespace Stanislavz\AskQuestion\Block;
 
 use Magento\Framework\View\Element\Template;
-
+use Magento\Customer\Model\SessionFactory;
 use Stanislavz\AskQuestion\Model\ResourceModel\AskQuestion\Collection;
 
 /**
@@ -24,6 +24,9 @@ class Questions extends \Magento\Framework\View\Element\Template
      */
     protected $_coreRegistry;
 
+    /** @var SessionFactory */
+    protected $customerSessionFactory;
+
     /**
      * Questions constructor.
      * @param Template\Context $context
@@ -32,6 +35,7 @@ class Questions extends \Magento\Framework\View\Element\Template
      * @param array $data
      */
     public function __construct(
+        \Magento\Customer\Model\SessionFactory $customerSessionFactory,
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\Registry $registry,
         \Stanislavz\AskQuestion\Model\ResourceModel\AskQuestion\CollectionFactory $collectionFactory,
@@ -40,6 +44,7 @@ class Questions extends \Magento\Framework\View\Element\Template
         parent::__construct($context, $data);
         $this->collectionFactory = $collectionFactory;
         $this->_coreRegistry = $registry;
+        $this->customerSessionFactory = $customerSessionFactory;
     }
 
     /**
@@ -55,7 +60,6 @@ class Questions extends \Magento\Framework\View\Element\Template
 
     /**
      * @return Collection
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getQuestions(): Collection
     {
@@ -67,5 +71,31 @@ class Questions extends \Magento\Framework\View\Element\Template
         $collection->addFieldToFilter('product_name', $this->getProductName())
             ->load();
         return $collection;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getQuestionsHistory()
+    {
+        /** @var Collection $collection */
+        $collection = $this->collectionFactory->create();
+        if ($limit = $this->getData('questions_history_limit')) {
+            $collection->setPageSize($limit);
+        }
+        $collection->addFieldToFilter('email', [$this->getCustomerEmail()])
+            ->load();
+        return $collection;
+    }
+
+    /**
+     * @return string
+     */
+    private function getCustomerEmail(): string
+    {
+        /** @var \Magento\Customer\Model\Session $customerSession */
+        $customerSession = $this->customerSessionFactory->create();
+
+        return $customerSession->getCustomer()->getEmail();
     }
 }
