@@ -1,7 +1,0 @@
-<config>
-    <router id="standard">
-        <route id="homework" frontName="home-work">
-            <module name="Stanislavz_LearnRoutes" />
-        </route>
-    </router>
-</config>

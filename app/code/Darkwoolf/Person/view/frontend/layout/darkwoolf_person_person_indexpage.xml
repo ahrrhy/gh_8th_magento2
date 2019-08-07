@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Darkwoolf\Person\Block\CustomBlock"
+                   name="custom.person.page.result"
+                   template="Darkwoolf_Person::person/myhomework.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

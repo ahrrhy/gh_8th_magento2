@@ -1,7 +1,0 @@
-<config>
-    <router id="standard">
-        <route id="kohello" frontName="ko-hello">
-            <module name="Stanislavz_LearnKnockout" />
-        </route>
-    </router>
-</config>

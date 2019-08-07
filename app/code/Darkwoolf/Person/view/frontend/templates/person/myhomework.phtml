@@ -1,0 +1,16 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+?>
+
+<div class="content-wrapper">
+    <h1>
+        <span>Your request was successfully
+            <?php if ($block->getFullName()): ?>
+                <h3>
+                    for <?= $block->getFullName(); ?>
+                </h3>
+            <?php endif;?>
+            <p><a href="<?= $block->getLinkToJson(); ?>">Link To JSON</a></p>
+        </span>
+    </h1>
+</div>
