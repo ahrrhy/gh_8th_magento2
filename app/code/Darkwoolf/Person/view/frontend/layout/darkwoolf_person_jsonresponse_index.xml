@@ -5,7 +5,7 @@
     <body>
         <referenceContainer name="content">
             <container name="darkwoolf.person.name.block">
-                <block class="Stanislavz\LearnRoutes\Block\CustomBlock"
+                <block class="Darkwoolf\Person\Block\CustomBlock"
                        name="person.block"
                        as="person.block"
                        template="Darkwoolf_Person::myhomework.phtml" />

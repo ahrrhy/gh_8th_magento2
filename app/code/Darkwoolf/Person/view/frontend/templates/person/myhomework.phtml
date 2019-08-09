@@ -10,7 +10,9 @@
                     for <?= $block->getFullName(); ?>
                 </h3>
             <?php endif;?>
-            <p><a href="<?= $block->getLinkToJson(); ?>">Link To JSON</a></p>
+            <?php if ($block->getLinkToJson()): ?>
+                <p><a href="<?= $block->getLinkToJson(); ?>">Link To JSON</a></p>
+            <?php endif;?>
         </span>
     </h1>
 </div>
